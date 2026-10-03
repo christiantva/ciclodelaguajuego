@@ -633,8 +633,129 @@ const CONTENIDO = {
       kuntur: '¡Kraa! Soy Kuntur. Mira dónde brilla, pequeño.',
       secretos: { termico: 'Una luciérnaga tibia dormía aquí.', piedra: 'Una huellita de Polvito. Va hacia el desierto.' }
     },
-    { id: 2, nombre: 'El País de las Nubes', icono: 'nube', color: '#a98bff', concepto: 'condensacion' },
-    { id: 3, nombre: 'La Cumbre Nevada',     icono: 'copo', color: '#4b8dff', concepto: 'precipitacion' },
+    {
+      id: 2, nombre: 'El País de las Nubes', icono: 'nube', color: '#a98bff', concepto: 'condensacion',
+      viaje: [ { who: 'perla', text: '¡Sigamos al vapor! ¡Arriba, arriba!', mood: 'feliz' } ],
+      intro: [
+        { who: 'perla', text: '¡Llegamos al País de las Nubes!', mood: 'sorprendida' },
+        { who: 'perla', text: 'Aquí arriba el aire es muy frío. ¡Brrr!', mood: 'curiosa' },
+        { who: 'perla', text: 'El vapor sube desde la laguna. ¡Ayudémoslo!', mood: 'feliz' }
+      ],
+      pasos: [
+        { id: 'guiar', titulo: 'Lleva el vapor al frío', icono: 'vapor',
+          objetivo: 'Arrastra cada vapor al espejo helado.',
+          pistas: [ 'El espejo helado tiene un copo de nieve.', 'La piedra tibia no enfría. ¡Busca el frío!' ] },
+        { id: 'fusionar', titulo: 'Arma la nube', icono: 'nube',
+          objetivo: 'Junta gotitas en el molde hasta llenarlo.',
+          pistas: [ 'Arrastra una gotita sobre el molde de nube.', 'También puedes juntar dos gotitas primero.' ] },
+        { id: 'vaso', titulo: 'El vaso con hielo', icono: 'vaso',
+          objetivo: 'Lleva el vaso con hielo al círculo de la mesa.',
+          pistas: [ 'Agarra el vaso que tiene cubitos de hielo.', 'Ponlo en el círculo de la mesa y espera.' ] },
+        { id: 'cerradura', titulo: 'El acertijo de Polvito', icono: 'candado',
+          objetivo: 'Arma la respuesta arrastrando las letras.',
+          pistas: [ 'Lee el acertijo otra vez. Toca la pizarra para oírlo.', 'Pon las letras en orden, de izquierda a derecha.' ] }
+      ],
+      guiar: {
+        condensa: '¡El vapor se enfrió y se hizo gotitas!',
+        tibio: 'Aquí hace calor. El vapor sigue siendo gas.',
+        explicacion: [ { who: 'perla', text: 'Cuando el vapor se enfría, se vuelve gotitas.', mood: 'sorprendida' },
+                       { who: 'perla', text: 'Eso se llama condensación.', mood: 'feliz' } ]
+      },
+      fusionar: {
+        intro: [ { who: 'perla', text: 'Las nubes son muchísimas gotitas juntas.', mood: 'curiosa' },
+                 { who: 'perla', text: '¡Llenemos el molde para formar una nube!', mood: 'feliz' } ],
+        tamano: { guiado: 4, estandar: 6, desafiante: 8 },   // gotitas que pide el molde
+        junta: '¡Dos gotitas se juntaron!', crece: '¡La nube crece!', lista: '¡Nube lista! ¡Qué esponjosa!'
+      },
+      vaso: {
+        intro: [ { who: 'nube', text: '¡Qué fenómeno! Hagamos mi experimento favorito.', radio: true },
+                 { who: 'nube', text: 'Pon el vaso con hielo en la mesa. Observa.', radio: true } ],
+        espera: 'Espera y mira el vaso por fuera...',
+        toca: '¡Toca las gotitas que aparecieron afuera!',
+        tibio: 'El vaso tibio no hace gotitas. ¡Falta el frío!',
+        explicacion: [ { who: 'perla', text: '¡El vaso no se salió! Está bien sano.', mood: 'sorprendida' },
+                       { who: 'perla', text: 'El vapor del aire tocó el vaso frío.', mood: 'curiosa' },
+                       { who: 'perla', text: 'Se enfrió y se volvió gotitas. ¡Condensación!', mood: 'feliz' } ]
+      },
+      cerradura: {
+        intro: [ { who: 'perla', text: '¡Polvito dejó un acertijo en la pizarra!', mood: 'curiosa' },
+                 { who: 'perla', text: 'Arma la respuesta con las letras de nube.', mood: 'feliz' } ],
+        respuesta: { guiado: 'NUBE', estandar: 'NUBE', desafiante: 'FRIO' },
+        distractores: { guiado: 0, estandar: 2, desafiante: 3 },
+        letrasExtra: 'AOSLTRM'
+      },
+      cristal: { nombre: 'Cristal de la Nube', icono: 'cristalNube' },
+      final: [ { who: 'perla', text: '¡El Cristal de la Nube! ¡Eso fue gotástico!', mood: 'feliz' },
+               { who: 'perla', text: 'Aprendimos la condensación: el vapor frío se hace gotitas.', mood: 'feliz' } ],
+      nota: 'Allá arriba hace un frío que ni mis pies soportan,\nlas gotitas se juntan y las nubes engordan.\nPero si una nube pesa más que un elefante...\n¿qué pasará? ¡Sigan, gotitas, adelante!\n                         — Polvito',
+      gancho: [ { who: 'perla', text: '¿Qué pasa cuando la nube pesa demasiado?', mood: 'curiosa' },
+                { who: 'perla', text: '¡Vamos a la Cumbre Nevada a descubrirlo!', mood: 'feliz' } ],
+      juguete: '¡Modo Juguete! Juega con las nubes.',
+      jugueteAyuda: 'Junta las nubes y tócalas. ¡Las grandes llueven!',
+      secretos: { arcoiris: '¡Detrás de la neblina había un arcoíris!', huella: 'Otra huellita de Polvito. ¡Pasó por aquí!' }
+    },
+    {
+      id: 3, nombre: 'La Cumbre Nevada', icono: 'copo', color: '#4b8dff', concepto: 'precipitacion',
+      viaje: [ { who: 'perla', text: '¡Volemos al nevado! Abrígate bien.', mood: 'feliz' } ],
+      intro: [
+        { who: 'perla', text: '¡La Cumbre Nevada! ¡Qué frío tan bonito!', mood: 'sorprendida' },
+        { who: 'perla', text: 'Esta nube está llenísima de gotitas.', mood: 'curiosa' },
+        { who: 'perla', text: 'Cuando pesan mucho, caen. Eso es precipitación.', mood: 'feliz' }
+      ],
+      pasos: [
+        { id: 'clima', titulo: 'La máquina del clima', icono: 'nube',
+          objetivo: 'Mueve la perilla y la palanca. ¿Qué cae de la nube?',
+          sub: [ 'Haz que caiga lluvia.', 'Haz que caiga nieve.', 'Haz que caiga granizo.' ],
+          pistas: [ 'Gira la perilla hacia el sol o hacia el copo.', 'Con frío y viento fuerte cae granizo.' ] },
+        { id: 'pedidos', titulo: 'Los pedidos del valle', icono: 'nota',
+          objetivo: 'Prepara el clima del pedido y toca el botón ¡Llover!',
+          pistas: [ 'Lee el pedido. ¿Lluvia, nieve o granizo?', 'Templado: lluvia. Muy frío: nieve. Frío y viento: granizo.' ] },
+        { id: 'deshielo', titulo: 'Derrite la nieve', icono: 'sol',
+          objetivo: 'Lleva el rayo de sol sobre cada montón de nieve.',
+          pistas: [ 'Agarra el rayo de sol amarillo.', 'Déjalo quieto sobre la nieve un ratito.' ] },
+        { id: 'cerradura', titulo: 'Fotos del clima', icono: 'candado',
+          objetivo: 'Arrastra cada foto a su nombre.',
+          pistas: [ 'La nieve son copitos. El granizo, bolitas de hielo.', 'La lluvia son gotas de agua líquida.' ] }
+      ],
+      /* Reglas de la máquina: frío/templado (perilla) y viento (palanca) */
+      clima: {
+        nombres: { lluvia: 'LLUVIA', nieve: 'NIEVE', granizo: 'GRANIZO' },
+        descubre: { lluvia: '¡Templado: cae lluvia!', nieve: '¡Muy frío: cae nieve!', granizo: '¡Frío y viento fuerte: granizo!' },
+        explicacion: [ { who: 'perla', text: 'Lluvia, nieve y granizo son precipitación.', mood: 'feliz' },
+                       { who: 'perla', text: 'Es el agua que cae de las nubes.', mood: 'curiosa' } ]
+      },
+      /* Pedidos de los pueblos (se pueden agregar más) */
+      pedidos: [
+        { quien: 'Esquiadora Sami', icono: 'copo', pide: 'nieve', texto: '¡Quiero nieve para esquiar!' },
+        { quien: 'Agricultor Tito', icono: 'planta', pide: 'lluvia', texto: 'Mis papas necesitan lluvia.' },
+        { quien: 'Doctora Nube', icono: 'granizo', pide: 'granizo', texto: 'Necesito granizo para estudiarlo.' }
+      ],
+      pedidosExtra: [ { quien: 'Niña Killa', icono: 'casa', pide: 'nieve', texto: '¡Quiero hacer un muñeco de nieve!' } ],
+      pedidoBien: '¡Pedido cumplido! ¡Gracias!',
+      pedidoMal: 'Cayó {cayo}. El pedido era {pide}.',
+      deshielo: {
+        intro: [ { who: 'perla', text: 'El río del valle está seco.', mood: 'curiosa' },
+                 { who: 'perla', text: '¡Derritamos un poco de nieve con el sol!', mood: 'feliz' } ],
+        derrite: '¡La nieve se vuelve agua líquida!',
+        arroyo: [ { who: 'perla', text: '¡Nació un arroyo! El agua baja al valle.', mood: 'sorprendida' },
+                  { who: 'perla', text: 'La nieve sólida se derritió en agua líquida.', mood: 'feliz' } ]
+      },
+      cerradura: {
+        intro: [ { who: 'perla', text: '¡Un cofre de hielo con fotos del clima!', mood: 'sorprendida' },
+                 { who: 'perla', text: 'Pon cada foto junto a su nombre.', mood: 'curiosa' } ],
+        fotos: [ { id: 'lluvia', nombre: 'LLUVIA' }, { id: 'nieve', nombre: 'NIEVE' }, { id: 'granizo', nombre: 'GRANIZO' } ]
+      },
+      cristal: { nombre: 'Cristal de la Nieve', icono: 'cristalNieve' },
+      final: [ { who: 'perla', text: '¡El Cristal de la Nieve! ¡Splash de emoción!', mood: 'feliz' },
+               { who: 'perla', text: 'Aprendimos la precipitación: lluvia, nieve y granizo.', mood: 'feliz' } ],
+      kuntur: [ { who: 'kuntur', text: '¡Kraa! Pequeños, traigo noticias del valle.' },
+                { who: 'kuntur', text: 'Polvito huyó hacia el valle. Dicen que está llorando.' },
+                { who: 'perla', text: '¿Llorando? ¡Tenemos que ayudarlo!', mood: 'sorprendida' } ],
+      gancho: [ { who: 'perla', text: '¡Sigamos el arroyo hasta el valle!', mood: 'feliz' } ],
+      juguete: '¡Modo Juguete! Juega con el clima de la cumbre.',
+      jugueteAyuda: 'Mueve la perilla y la palanca. ¡Toca Llover!',
+      secretos: { pluma: '¡Una pluma de Kuntur bajo la nieve!', huella: 'Huellitas de Polvito con lagrimitas. ¿Está triste?' }
+    },
     { id: 4, nombre: 'El Río y el Valle',    icono: 'rio',  color: '#6fe3a8', concepto: 'escorrentia' }
   ],
 
@@ -690,7 +811,20 @@ const CONTENIDO = {
     estados:     { dibujo: ['cubo', 'gota', 'vapor'],     frase: 'El agua puede ser sólida, líquida o gas.' },
     huella:      { dibujo: ['huella', 'flecha', 'duna'],  frase: 'Huellas de Polvito hacia el desierto.' },
     luciernaga:  { dibujo: ['visor', 'flecha', 'luciernaga'], frase: 'El visor térmico muestra lo tibio.' },
-    cristal1:    { dibujo: ['cristalSol', 'estrella', 'cristalSol'], frase: '¡Recuperé el Cristal del Sol!' }
+    cristal1:    { dibujo: ['cristalSol', 'estrella', 'cristalSol'], frase: '¡Recuperé el Cristal del Sol!' },
+    condensacion:{ dibujo: ['vapor', 'copo', 'gota'],     frase: 'El vapor frío se vuelve gotitas.' },
+    nube:        { dibujo: ['gota', 'gota', 'nube'],      frase: 'Una nube son muchas gotitas juntas.' },
+    vaso:        { dibujo: ['vaso', 'copo', 'gota'],      frase: 'El vaso frío junta gotitas del aire.' },
+    arcoiris:    { dibujo: ['nube', 'arcoiris', 'sol'],   frase: 'Un arcoíris escondido en la neblina.' },
+    huella2:     { dibujo: ['huella', 'nube', 'huella'],  frase: 'Polvito también pasó por las nubes.' },
+    cristal2:    { dibujo: ['cristalNube', 'estrella', 'cristalNube'], frase: '¡Recuperé el Cristal de la Nube!' },
+    precipitacion:{ dibujo: ['nube', 'flecha', 'lluvia'], frase: 'El agua cae de las nubes: precipitación.' },
+    clima:       { dibujo: ['lluvia', 'copo', 'granizo'], frase: 'Lluvia, nieve y granizo caen de las nubes.' },
+    pedidos:     { dibujo: ['nota', 'check', 'planta'],   frase: 'Cumplí los pedidos del valle.' },
+    deshielo:    { dibujo: ['copo', 'sol', 'rio'],        frase: 'La nieve se derrite y nace un arroyo.' },
+    pluma:       { dibujo: ['copo', 'flecha', 'pluma'],   frase: 'Kuntur perdió una pluma en la nieve.' },
+    huella3:     { dibujo: ['huella', 'gota', 'huella'],  frase: 'Polvito dejó lagrimitas. Está triste.' },
+    cristal3:    { dibujo: ['cristalNieve', 'estrella', 'cristalNieve'], frase: '¡Recuperé el Cristal de la Nieve!' }
   },
 
   /* Tienda de Perla: solo cosméticos (Fase 3 la abre al final de cada zona) */
@@ -1403,6 +1537,8 @@ const ICONS = (() => {
     filtro: [{ d: 'M4 3h16l-5 9v8l-6 2V12Z', f: '#e8f6ff', s: '#4a8cd8', w: 1.1 }, { d: 'M5.6 6h12.8', s: '#c8a070', w: 2 }, { d: 'M7.4 9h9.2', s: '#ffd9a8', w: 2 }],
     ojo: [{ d: 'M2 12Q12 3 22 12 12 21 2 12Z', f: '#ffffff', s: ink, w: 1.2 }, { d: C(12, 12, 3.6), f: '#4b8dff' }, { d: C(12, 12, 1.5), f: '#2a2463' }],
     perla: [{ d: drop, f: '#7fe9df', s: '#22a8b0', w: 1 }, { d: C(9.8, 14.5, 1.3), f: '#2a2463' }, { d: C(14.2, 14.5, 1.3), f: '#2a2463' }, { d: 'M10.5 17.5q1.5 1.2 3 0', s: '#2a2463', w: 1 }],
+    viento: [{ d: 'M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h8', s: '#4b8dff', w: 2.2 }],
+    boton: [{ d: C(12, 13, 8), f: '#ff6fb3', s: '#c23a7c', w: 1.2 }, { d: 'M8 11a4 3 0 0 1 4-2.5', s: '#ffffff', w: 1.6 }],
     piedra: [{ d: 'M3 18c0-4 3-8 8-8.5 5-.5 9 3 10 8.5Z', f: '#c8b8f0', s: '#7a6ab8', w: 1.1 }, { d: 'M8 13.5a3 3 0 0 1 3-1.5', s: '#ffffff', w: 1.3 }]
   };
 })();
@@ -2027,7 +2163,7 @@ const Particles = {
     const mult = (Settings.calmado ? 0.5 : 1) * (Settings.reducirMov ? 0.6 : 1);
     n = Math.max(1, Math.round(n * (o.noScale ? 1 : mult)));
     const col = o.color ? TMP.c1.set(o.color) : null;
-    const sc = o.scale || 1;
+    const sc = o.scale || 1, bz = o.big || 1;
     for (let k = 0; k < n; k++) {
       const c = col || U.pick(this.PAL);
       switch (type) {
@@ -2037,8 +2173,9 @@ const Particles = {
         case 'confeti': { const a = Math.random() * 6.28, s = U.rand(1, 3) * sc; S.spawn(x, y, z, Math.cos(a) * s, U.rand(2.5, 5) * sc, Math.sin(a) * s, U.rand(1.3, 2.2), U.rand(.16, .28) * sc, c.r, c.g, c.b, 1, 2, -4, 1.2, 0, .6); break; }
         case 'puff': { const a = Math.random() * 6.28; S.spawn(x + Math.cos(a) * .15, y, z + Math.sin(a) * .15, Math.cos(a) * .8, U.rand(.3, .9), Math.sin(a) * .8, U.rand(.8, 1.3), U.rand(.35, .55) * sc, c.r, c.g, c.b, .75, 3, .3, 2.5, 1.5, .1); break; }
         case 'star': G.spawn(x + U.rand(-.1, .1), y + U.rand(-.1, .1), z + U.rand(-.1, .1), 0, 0, 0, U.rand(.4, .7), U.rand(.3, .5) * sc, 1, .95, .7, 1, 1, 0, 0, -.5, 0); break;
-        case 'rain': S.spawn(x + U.rand(-1, 1) * sc, y, z + U.rand(-1, 1) * sc, 0, -U.rand(7, 9), 0, U.rand(.6, 1), U.rand(.12, .18), .6, .82, 1, .8, 5, -2, 0, 0, 0); break;
-        case 'snow': S.spawn(x + U.rand(-1, 1) * sc, y, z + U.rand(-1, 1) * sc, 0, -U.rand(.8, 1.4), 0, U.rand(2, 3.5), U.rand(.14, .26), 1, 1, 1, .95, 4, 0, 0, 0, .4); break;
+        case 'rain': S.spawn(x + U.rand(-1, 1) * sc, y, z + U.rand(-1, 1) * sc, 0, -U.rand(7, 9), 0, o.life || U.rand(.6, 1), U.rand(.12, .18) * bz, .6, .82, 1, .8, 5, -2, 0, 0, 0); break;
+        case 'snow': S.spawn(x + U.rand(-1, 1) * sc, y, z + U.rand(-1, 1) * sc, 0, -U.rand(.8, 1.4), 0, o.life || U.rand(2, 3.5), U.rand(.14, .26) * bz, 1, 1, 1, .95, 4, 0, 0, 0, .4); break;
+        case 'hail': S.spawn(x + U.rand(-1, 1) * sc, y, z + U.rand(-1, 1) * sc, U.rand(-.5, .5), -U.rand(5, 7), 0, o.life || U.rand(.8, 1.0), U.rand(.13, .2) * bz, .93, .97, 1, 1, 2, -7, 0, 0, 0); break;
         case 'firefly': G.spawn(x, y, z, U.rand(-.2, .2), U.rand(-.05, .15), U.rand(-.2, .2), U.rand(3, 6), U.rand(.18, .3), 1, .95, .5, .8, 0, 0, 0, 0, .3); break;
         case 'petal': { const pc = U.pick([this.PAL[1], this.PAL[2], this.PAL[4], this.PAL[5]]); S.spawn(x, y, z, U.rand(-.3, .3), U.rand(-.25, -.05), U.rand(-.3, .3), U.rand(6, 9), U.rand(.12, .18), pc.r, pc.g, pc.b, .75, 6, 0, 0, 0, .5); break; }
         case 'trail': G.spawn(x, y, z, U.rand(-.1, .1), U.rand(-.1, .1), U.rand(-.1, .1), .6, U.rand(.12, .2) * sc, c.r, c.g, c.b, .8, o.shape !== undefined ? o.shape : 0, 0, 1, -.6, 0); break;
@@ -2824,13 +2961,13 @@ const CamRig = {
     const arrow = new THREE.Mesh(new THREE.ConeGeometry(0.32, 0.6, 4), jellyMat({ a: '#7fe9df', b: '#4b8dff', glow: 1, hMin: -0.3, hMax: 0.3 })); arrow.rotation.x = Math.PI; arrow.position.y = 1.0; g.add(arrow); addOutline(arrow, 0.035);
     const lab = labelSprite(label, { icon: 'flecha', h: 0.42, bg: '#fffbe0' }); lab.position.y = 1.75; g.add(lab);
     Engine.scene.add(g);
-    const m = { name, g, arrow, ring };
+    const m = { name, g, arrow, ring, tag: Game.zoneTag };
     Drag.addClickable(g, { name: 'Ir a: ' + label, radius: 0.9, proxyOffset: new THREE.Vector3(0, 0.8, 0), onClick: () => { if (this.moving) return; Bus.emit('marker', { name }); this.go(name); } });
     this.markers.push(m); g.visible = false;
     return m;
   },
-  showMarkers(names) { for (const m of this.markers) { const v = names.includes(m.name); m.g.visible = v; Drag.enable(m.g, v); } },
-  clearMarkers() { for (const m of this.markers) { Engine.scene.remove(m.g); Drag.remove(m.g); } this.markers = []; },
+  showMarkers(names) { for (const m of this.markers) { const v = names.includes(m.name); m.g.visible = v; if (m.g.userData.rec) m.g.userData.rec.enabled = v; } Drag.dirty = true; },
+  clearMarkers(tag) { for (const m of this.markers) if (!tag || m.tag === tag) { Engine.scene.remove(m.g); Drag.remove(m.g); } this.markers = tag ? this.markers.filter(m => m.tag !== tag) : []; },
   update(dt) {
     const cam = Engine.camera;
     this.yaw = U.damp(this.yaw, this.yawT, 8, dt); this.pitch = U.damp(this.pitch, this.pitchT, 8, dt);
@@ -3203,7 +3340,7 @@ const World = {
       }
     };
     const C = this.P.nubes;
-    cluster(C.x, C.y, C.z, 22, 5); cluster(C.x - 9, C.y + 2, C.z - 4, 12, 4); cluster(C.x + 8, C.y - 1, C.z + 3, 10, 3.5);
+    cluster(C.x, C.y + 4, C.z - 12, 18, 5); cluster(C.x - 14, C.y + 3, C.z - 6, 12, 4); cluster(C.x + 14, C.y + 1, C.z - 4, 10, 3.5);
     const far = [[-40, 26, -60], [40, 30, -50], [-55, 24, 10], [55, 28, 20], [0, 34, -80], [-20, 30, 50], [30, 25, 60]];
     far.forEach(f => cluster(f[0], f[1], f[2], 9, 6));
     im.count = k; im.instanceMatrix.needsUpdate = true;
@@ -3795,7 +3932,7 @@ const Prologo = {
    clasificar sólido/líquido/gas → cerradura de etiquetas → Cristal del Sol
    ===================================================================== */
 const Zona1 = {
-  D: null, z: null, st: {},
+  id: 1, D: null, z: null, st: {},
   T: 12, lampOn: false, step: -1, vaporAcc: 0, toyMode: false,
   build() {
     const D = this.D = CONTENIDO.zonas[0];
@@ -4306,10 +4443,855 @@ const Zona1 = {
   },
   teardown() {
     if (this.offThermal) this.offThermal();
-    CamRig.clearMarkers();
+    CamRig.clearMarkers('z1');
     if (this.z) ZoneKit.end(this.z);
     this.z = null;
   }
+};
+
+/* =====================================================================
+   SECCIÓN 15 · KIT DE ZONAS 2-4: palanca, nubes de gelatina, letras,
+   cristal de premio, nota de Polvito y viaje entre zonas
+   ===================================================================== */
+/* ---------- Aparato: palanca (arrastre vertical) ---------- */
+class Lever {
+  constructor(o = {}) {
+    this.v = o.value || 0; this.onChange = o.onChange; this.steps = -1;
+    const g = this.group = new THREE.Group();
+    const base = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.25, 0.6), toonMat(o.baseColor || '#8b6bff', { unique: true })); base.position.y = 0.12; g.add(base);
+    const slot = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.05, 0.5), toonMat('#4a4290')); slot.position.y = 0.26; g.add(slot);
+    const piv = this.pivot = new THREE.Group(); piv.position.y = 0.25; g.add(piv);
+    const stick = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.9, 8), toonMat('#ffffff', { unique: true })); stick.position.y = 0.45; piv.add(stick);
+    const ball = this.ball = new THREE.Mesh(new THREE.SphereGeometry(0.2, 14, 10), jellyMat({ a: o.color || '#7fe9df', b: o.color2 || '#4b8dff', glow: 0.7 })); ball.position.y = 0.95; piv.add(ball); addOutline(ball, 0.03);
+    if (o.icons) {
+      const mk = (ic, z) => { const s = new THREE.Sprite(new THREE.SpriteMaterial({ depthWrite: false, map: Tex.icon(ic, 96), transparent: true })); s.scale.setScalar(0.4); s.position.set(0.62, 0.35, z); g.add(s); };
+      mk(o.icons[0], 0.35); mk(o.icons[1], -0.35);
+    }
+    this.set(this.v, true);
+  }
+  set(v, silent) {
+    v = U.clamp(v, 0, 1); const st = Math.round(v * 4);
+    if (!silent && st !== this.steps) Sfx.play('tick');
+    this.steps = st; this.v = v; this.pivot.rotation.x = U.lerp(0.65, -0.65, v);
+    if (!silent && this.onChange) this.onChange(v);
+  }
+  begin() { Glow.set(this.group, 0.5); }
+  move(e, dx, dy) { this.set(this.v - dy * 0.006); }
+  end() { Glow.set(this.group, 0); }
+  key(d) { this.set(this.v + d * 0.25); }
+}
+
+const ZK = {
+  V: (x, y, z) => new THREE.Vector3(x, y, z),
+  /* Nube de gelatina hecha de esferas fusionadas (una sola malla) */
+  cloud(n, spread, o = {}) {
+    const sp = new THREE.SphereGeometry(1, Engine.Q.seg, Math.round(Engine.Q.seg * 0.7)), parts = [];
+    for (let i = 0; i < n; i++) {
+      const a = i / n * Math.PI * 2, r = i === 0 ? 0 : spread * (0.45 + 0.5 * ((i * 37) % 10) / 10);
+      const s = (o.size || 1) * (i === 0 ? 1.25 : 0.7 + ((i * 53) % 10) / 22);
+      parts.push({ geo: sp.clone(), matrix: mtx(Math.cos(a) * r, ((i * 29) % 10) / 10 * (o.lift || 0.5), Math.sin(a) * r * (o.depth || 0.7), s * (o.flat || 1.2), s * (o.squash || 0.9), s), color: o.colors ? o.colors[i % o.colors.length] : '#ffffff' });
+    }
+    sp.dispose();
+    return new THREE.Mesh(mergeGeos(parts), jellyMat({ a: o.a || '#ffffff', b: o.b || '#f4eeff', vcol: true, rim: '#ffffff', sss: o.sss || '#fff0f8', glow: o.glow !== undefined ? o.glow : 0.9, spec: 0.25, alpha: o.alpha, wobble: o.wobble || 0.02, hMin: -1, hMax: 1.2 }));
+  },
+  /* Cubo de letra para los acertijos */
+  letterTile(ch, color) {
+    const g = new THREE.Group();
+    const cube = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.62, 0.3), jellyMat({ a: '#ffffff', b: color || '#d8c9ff', glow: 0.5, hMin: -0.3, hMax: 0.3 })); g.add(cube); addOutline(cube, 0.025);
+    const L = Tex.canvas(128, 128); const c = L.ctx;
+    c.font = '900 96px "Trebuchet MS", ui-rounded, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = '#2a2463'; c.fillText(ch, 64, 70);
+    const face = new THREE.Mesh(new THREE.PlaneGeometry(0.56, 0.56), new THREE.MeshBasicMaterial({ map: L.tex, transparent: true })); face.position.z = 0.16; g.add(face);
+    g.userData.letter = ch; g.userData.tex = L.tex;
+    return g;
+  },
+  /* Cristal del ciclo: aparece, se toca y vuela al HUD */
+  crystalMesh(a, b, edge) {
+    const cr = new THREE.Mesh(new THREE.OctahedronGeometry(0.42, 0), jellyMat({ a, b, glow: 1.5, rim: '#ffffff', sss: a, spec: 1.2, hMin: -0.4, hMax: 0.4 }));
+    cr.scale.set(1, 1.5, 1); addOutline(cr, 0.03, edge || '#4a4290'); return cr;
+  },
+  async crystalReward(Z, cr, idx, from) {
+    const D = Z.D;
+    UI.hideObjective(); Hints.clear();
+    cr.visible = true; cr.position.copy(from);
+    const y0 = cr.position.y;
+    Sfx.play('chime'); Particles.emit('sparkle', from, 26);
+    await Tweens.promise({ dur: 1.2, ease: Ease.outBack, onUpdate: k => { cr.position.y = y0 + k * 1.4; cr.rotation.y = k * 6; } });
+    UI.objective('¡Toca el ' + D.cristal.nombre + '!', D.cristal.icono);
+    const got = deferred();
+    Drag.addClickable(cr, { name: D.cristal.nombre, radius: 0.8, onClick: () => got.resolve() });
+    Glow.pulse(cr, 20);
+    await got;
+    Drag.enable(cr, false); UI.hideObjective();
+    const p0 = cr.position.clone();
+    Tweens.add({ dur: 1.0, ease: Ease.inOutCubic, onUpdate: k => { cr.position.lerpVectors(p0, Engine.camera.position, k * 0.85); cr.rotation.y += 0.3; cr.scale.set(1 - k * 0.6, 1.5 * (1 - k * 0.6), 1 - k * 0.6); }, onDone: () => { cr.visible = false; } });
+    if (!Progress.cristales.includes(idx)) Progress.cristales.push(idx);
+    setTimeout(() => UI.renderCrystals(), 900);
+    Telemetria.zoneEnd(Z.id);
+    Bus.emit('zone_done', { zone: Z.id, pos: p0 });
+    World.setProgress(Math.min(0.85, Progress.cristales.length * 0.2));
+    if (Hints.usedZone <= 1) Progress.badge('paciente');
+    await Flow.wait(1.4);
+  },
+  async note(pos, text) {
+    const note = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.7), new THREE.MeshBasicMaterial({ map: Tex.icon('nota', 128, { ring: '#fff4dc' }), transparent: true, side: THREE.DoubleSide, depthWrite: false }));
+    note.position.copy(pos); note.lookAt(Engine.camera.position); Engine.scene.add(note);
+    Sfx.play('paper'); Particles.emit('puff', pos, 8, { color: '#f0c090' });
+    UI.objective('Polvito dejó una nota. ¡Tócala!', 'nota');
+    const nd = deferred();
+    Drag.addClickable(note, { name: 'Nota de Polvito', radius: 0.5, onClick: () => nd.resolve() });
+    Glow.ring(pos.clone().add(new THREE.Vector3(0, -0.6, 0)), 10);
+    const tw = Tweens.add({ dur: 60, ease: Ease.linear, onUpdate: () => { note.position.y = pos.y + Math.sin(GU.uTime.value * 2) * 0.08; } });
+    await nd; tw.cancel(); Drag.remove(note); Engine.scene.remove(note); note.geometry.dispose(); note.material.dispose();
+    UI.hideObjective();
+    Game.notes.push(text); UI.inventory();
+    await UI.note(text);
+  },
+  /* Pizarra con lienzo editable */
+  board(w, h, px) {
+    const g = new THREE.Group();
+    const c = Tex.canvas(Math.round(px * w / h), px);
+    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: c.tex })); g.add(p);
+    const fr = new THREE.Mesh(new THREE.BoxGeometry(w + 0.2, h + 0.2, 0.08), toonMat('#c8855a')); fr.position.z = -0.05; g.add(fr);
+    g.userData.canvas = c; g.userData.w = w; g.userData.h = h;
+    return g;
+  },
+  paper(ctx, W, H) {
+    ctx.fillStyle = '#fffaf0'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#fff1d6'; ctx.globalAlpha = 0.35;
+    for (let i = 0; i < 26; i++) { ctx.beginPath(); ctx.arc((i * 137) % W, (i * 89) % H, 22 + (i * 13) % 40, 0, 7); ctx.fill(); }
+    ctx.globalAlpha = 1;
+  },
+  /* Viaje en vuelo de una zona a la siguiente (carga la nueva, libera la anterior) */
+  async travel(from, to) {
+    Game.setState('VIAJE');
+    UI.hideObjective(); Hints.clear(); CamRig.showMarkers([]);
+    to.build();
+    Engine.fps.warm = CONFIG.calidad.calentamiento;
+    if (to.D.viaje) await UI.say(to.D.viaje);
+    UI.setZone(to.D);
+    const st = to.st[to.first];
+    const mid = CamRig.pos.clone().lerp(st.pos, 0.5); mid.y = Math.max(CamRig.pos.y, st.pos.y) + 8;
+    Sfx.play('whoosh'); Sfx.play('wind', { vol: 0.5 });
+    await CamRig.go({ pos: mid, tgt: st.tgt.clone().lerp(CamRig.tgt, 0.5), fov: 60 }, Settings.reducirMov ? 0.8 : 2.0);
+    await CamRig.go(st, Settings.reducirMov ? 0.8 : 2.0);
+    CamRig.cur = to.first;
+    if (from && from.teardown) from.teardown();
+  }
+};
+
+/* =====================================================================
+   SECCIÓN 16 · ZONA 2: EL PAÍS DE LAS NUBES (condensación)
+   Pasos: guiar el vapor al frío → fusionar gotitas en el molde →
+   vaso con hielo → acertijo de letras → Cristal de la Nube
+   ===================================================================== */
+const Zona2 = {
+  id: 2, D: null, z: null, st: {}, first: 'z2_cielo', I: new THREE.Vector3(10, 24, -28), toyMode: false,
+  build() {
+    const D = this.D = CONTENIDO.zonas[1], V = ZK.V, I = this.I;
+    const z = this.z = ZoneKit.begin('z2'), G = z.group;
+    const T = this.T = I.y + 0.35;
+    const P = (x, y, zz) => new THREE.Vector3(I.x + x, y, I.z + zz);
+    this.P = P;
+    /* Estaciones */
+    this.st = {
+      z2_cielo:    { pos: P(0, T + 3.0, 7.8), tgt: P(0, T + 1.3, -0.8) },
+      z2_mesa:     { pos: P(6.0, T + 2.6, 8.6), tgt: P(6.0, T + 0.8, 4.4) },
+      z2_acertijo: { pos: P(-6.0, T + 3.0, 10.2), tgt: P(-6.0, T + 1.8, 4.0) }
+    };
+    for (const k in this.st) CamRig.define(k, this.st[k].pos, this.st[k].tgt, 55);
+    CamRig.addMarker('z2_mesa', P(4.4, T - 0.2, 3.9), 'Mesa');
+    CamRig.addMarker('z2_acertijo', P(-4.4, T - 0.2, 3.9), 'Acertijo');
+    CamRig.addMarker('z2_cielo', P(0, T - 0.2, 3.4), 'Cielo');
+    /* Isla de nubes */
+    const isl = ZK.cloud(26, 7.5, { size: 1.6, flat: 1.5, squash: 0.5, lift: 0.3, glow: 0.25, colors: ['#e2d6ff', '#efe6ff', '#ffe2f2', '#dcecff'] });
+    isl.position.copy(P(0, T - 0.75, 0.6)); G.add(isl);
+    for (const sx of [-1, 1]) { const s = ZK.cloud(12, 2.6, { size: 1.2, flat: 1.4, squash: 0.5, glow: 0.25, colors: ['#e6dcff', '#f2eaff'] }); s.position.copy(P(6 * sx, T - 0.65, 5.0)); G.add(s); }
+    /* ---- Paso 1: espejo helado y piedra tibia ---- */
+    const mir = this.mirror = new THREE.Group(); mir.position.copy(P(-4.6, T, -1.2)); G.add(mir);
+    const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 1.6, 8), toonMat('#9cc4ff')); pole.position.y = 0.8; mir.add(pole);
+    const disc = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 0.12, 28), jellyMat({ a: '#f2fbff', b: '#9fdcff', glow: 0.6, spec: 1.4, rim: '#ffffff', hMin: -0.1, hMax: 0.1 }));
+    disc.rotation.x = Math.PI / 2; disc.position.y = 2.2; mir.add(disc); addOutline(disc, 0.03, '#4a8cd8');
+    const frame = new THREE.Mesh(new THREE.TorusGeometry(0.98, 0.09, 8, 30), jellyMat({ a: '#ffffff', b: '#cfe8ff', glow: 0.8 })); frame.position.y = 2.2; mir.add(frame);
+    const mi = new THREE.Sprite(new THREE.SpriteMaterial({ depthWrite: false, map: Tex.icon('copo', 128), transparent: true })); mi.scale.setScalar(0.9); mi.position.set(0, 2.2, 0.12); mir.add(mi);
+    const ml = labelSprite('Espejo helado', { icon: 'copo', h: 0.32 }); ml.position.y = 3.45; mir.add(ml);
+    mir.lookAt(this.st.z2_cielo.pos.x, mir.position.y, this.st.z2_cielo.pos.z);
+    const warm = this.warm = new THREE.Group(); warm.position.copy(P(-1.2, T, 0.5)); G.add(warm);
+    const ws = new THREE.Mesh(new THREE.SphereGeometry(0.6, 16, 12), jellyMat({ a: '#ffe6a8', b: '#ff9a4a', glow: 1.0, sss: '#ffd080' })); ws.scale.set(1.2, 0.7, 1); ws.position.y = 0.35; warm.add(ws); addOutline(ws, 0.03, '#c8603a');
+    const wi = new THREE.Sprite(new THREE.SpriteMaterial({ depthWrite: false, map: Tex.icon('sol', 96), transparent: true })); wi.scale.setScalar(0.5); wi.position.y = 1.05; warm.add(wi);
+    const wl = labelSprite('Piedra tibia', { icon: 'sol', h: 0.28 }); wl.position.y = 1.55; warm.add(wl);
+    /* vapores que suben desde la laguna */
+    this.puffs = [];
+    for (let i = 0; i < 4; i++) {
+      const g = new THREE.Group(); g.position.copy(P(-6.6 + i * 1.25, T + 0.9 + (i % 2) * 0.45, 2.7)); G.add(g);
+      for (let k = 0; k < 3; k++) { const s = new THREE.Mesh(new THREE.SphereGeometry(0.26 - k * 0.04, 12, 10), jellyMat({ a: '#ffffff', b: '#b8a6ff', alpha: 0.8, glow: 0.7, rim: '#ffffff', sss: '#ffd8f0' })); s.position.set((k - 1) * 0.16, k * 0.22, 0); g.add(s); }
+      this.puffs.push({ g, home: g.position.clone(), ph: i * 1.7, done: false });
+    }
+    /* gotitas (se crean una vez y se reutilizan) */
+    this.drops = [];
+    for (let k = 0; k < 8; k++) {
+      const m = new THREE.Mesh(Perla.dropGeo(12), jellyMat({ a: '#c8fbff', b: '#3fb8ff', glow: 0.6, hMin: -1, hMax: 1.45 }));
+      m.scale.setScalar(0.24); m.visible = false; G.add(m); addOutline(m, 0.05, '#2a7fc0');
+      m.userData.drop = true;
+      this.drops.push({ m, worth: 1, spot: P(0.6 + (k % 4) * 0.95, T + 0.85 + (k >> 2) * 0.65, 1.9 - (k % 2) * 0.35), ph: k });
+    }
+    /* molde de nube y medidor */
+    const mold = this.mold = new THREE.Group(); mold.position.copy(P(3.7, T + 2.1, -1.0)); G.add(mold);
+    [[-0.7, -0.1, 0.62], [0, 0.25, 0.8], [0.72, -0.05, 0.6]].forEach(([x, y, r]) => { const t = new THREE.Mesh(new THREE.TorusGeometry(r, 0.07, 6, 28), jellyMat({ a: '#cdb8ff', b: '#8b6bff', glow: 0.8 })); t.position.set(x, y, 0); mold.add(t); });
+    const cl = this.moldCloud = ZK.cloud(7, 0.8, { size: 0.65, colors: ['#ffffff', '#f4eeff'], glow: 1.0 }); cl.scale.setScalar(0.01); mold.add(cl);
+    mold.lookAt(this.st.z2_cielo.pos.x, mold.position.y, this.st.z2_cielo.pos.z);
+    this.gauge = Tex.canvas(512, 128); z.disp.add(this.gauge.tex);
+    const gm = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.55), new THREE.MeshBasicMaterial({ map: this.gauge.tex, transparent: true })); gm.position.set(0, -1.35, 0.05); mold.add(gm);
+    const moldL = labelSprite('Molde de nube', { icon: 'nube', h: 0.3 }); moldL.position.y = 1.35; mold.add(moldL);
+    /* ---- Paso 3: mesa con dos vasos ---- */
+    const TB = this.tableTop = T + 0.9;
+    const tt = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 0.16, 24), toonMat('#ffd9a8')); tt.position.copy(P(6.0, TB - 0.08, 4.5)); G.add(tt);
+    const tl = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.25, 0.9, 10), toonMat('#c8855a')); tl.position.copy(P(6.0, T + 0.45, 4.5)); G.add(tl);
+    this.spot = P(5.3, TB, 4.5);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.05, 6, 24), jellyMat({ a: '#fff6a8', b: '#ffd447', glow: 1.2 })); ring.rotation.x = Math.PI / 2; ring.position.copy(this.spot).add(V(0, 0.03, 0)); G.add(ring); this.spotRing = ring;
+    this.cold = this.makeGlass(true); this.cold.position.copy(P(6.6, TB, 5.0)); G.add(this.cold);
+    this.hot = this.makeGlass(false); this.hot.position.copy(P(6.9, TB, 4.0)); G.add(this.hot);
+    /* ---- Cerradura: pizarra del acertijo y cofre de nube ---- */
+    const bd = this.board = ZK.board(3.4, 2.1, 420); bd.position.copy(P(-6.0, T + 2.45, 3.5)); G.add(bd); { const c = bd.userData.canvas; ZK.paper(c.ctx, c.cv.width, c.cv.height); c.tex.needsUpdate = true; }
+    bd.lookAt(this.st.z2_acertijo.pos.x, bd.position.y, this.st.z2_acertijo.pos.z);
+    for (const sx of [-1, 1]) { const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 2.2, 6), toonMat('#c8855a')); leg.position.set(sx * 1.3, -1.5, -0.12); leg.scale.y = 1.2; bd.add(leg); }
+    const chest = this.chest = ZK.cloud(9, 0.7, { size: 0.55, colors: ['#ffd8f0', '#e8dcff'], glow: 0.9 }); chest.position.copy(P(-8.6, T + 0.4, 3.6)); G.add(chest);
+    this.crystal = ZK.crystalMesh('#efe6ff', '#9a7bff', '#5f44c4'); this.crystal.visible = false; G.add(this.crystal);
+    /* ---- Secretos: arcoíris tras la neblina y huellita (lupa) ---- */
+    const rb = this.rainbow = new THREE.Group(); rb.position.copy(P(7.8, T + 0.2, -2.2)); G.add(rb);
+    ['#ff6fb3', '#ffad84', '#ffd447', '#6fe3a8', '#4b8dff', '#a98bff'].forEach((c, i) => { const a = new THREE.Mesh(new THREE.TorusGeometry(1.6 - i * 0.16, 0.08, 6, 30, Math.PI), jellyMat({ a: c, b: c, glow: 1.2 })); rb.add(a); });
+    rb.lookAt(this.st.z2_cielo.pos.x, rb.position.y, this.st.z2_cielo.pos.z);
+    const mist = this.mist = new THREE.Group(); mist.position.copy(P(7.6, T + 0.9, -1.2)); G.add(mist);
+    for (let i = 0; i < 6; i++) { const s = new THREE.Mesh(new THREE.SphereGeometry(0.95, 14, 10), jellyMat({ a: '#f4f0ff', b: '#e0d6ff', alpha: 0.97, glow: 0.4 })); s.position.set((i % 3 - 1) * 0.9, Math.floor(i / 3) * 0.8, 0); s.userData.home = s.position.clone(); mist.add(s); }
+    Drag.addClickable(mist, { name: 'Neblina', onClick: () => this.openMist() });
+    const fp = this.footprint = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.8), secretMat(Tex.icon('huella', 128, { ring: '#fff6c0' })));
+    fp.position.copy(P(-3.4, T + 0.5, 2.8)); fp.lookAt(this.st.z2_cielo.pos); G.add(fp);
+    /* nubecitas del Modo Juguete */
+    this.toyClouds = [];
+    for (let i = 0; i < 5; i++) { const c = ZK.cloud(5, 0.5, { size: 0.42, colors: ['#ffffff', ['#ffe0f0', '#e0f0ff', '#fff3c0', '#e0ffe8', '#efe6ff'][i]] }); c.visible = false; G.add(c); this.toyClouds.push({ m: c, size: 1, rainT: 0 }); }
+    this.drawGauge(0);
+  },
+  makeGlass(cold) {
+    const g = new THREE.Group();
+    const gl = new THREE.Mesh(new THREE.CylinderGeometry(0.27, 0.22, 0.7, 18, 1, true), jellyMat({ a: '#ffffff', b: '#eaf8ff', alpha: 0.35, side: THREE.DoubleSide, glow: 0.2, spec: 1.2 })); gl.position.y = 0.35; g.add(gl);
+    const bot = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.04, 18), jellyMat({ a: '#ffffff', alpha: 0.5 })); bot.position.y = 0.02; g.add(bot);
+    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.21, 0.5, 18), jellyMat({ a: cold ? '#d8f6ff' : '#fff0d0', b: cold ? '#7fd0ff' : '#ffc890', glow: 0.5, alpha: 0.85 })); w.position.y = 0.27; g.add(w);
+    if (cold) for (let i = 0; i < 3; i++) { const c = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.15, 0.15), jellyMat({ a: '#ffffff', b: '#dff4ff', glow: 0.6 })); c.position.set((i - 1) * 0.12, 0.47 + (i % 2) * 0.05, (i % 2) * 0.06); c.rotation.set(i, i * 2, 0); g.add(c); }
+    const lab = labelSprite(cold ? 'Vaso con hielo' : 'Vaso tibio', { icon: cold ? 'cubo' : 'sol', h: 0.22 }); lab.position.set(0, 0.98, 0); g.add(lab);
+    g.userData.beads = [];
+    if (cold) for (let i = 0; i < 12; i++) {
+      const b = new THREE.Mesh(new THREE.SphereGeometry(0.05, 8, 6), jellyMat({ a: '#e8fbff', b: '#7fd0ff', glow: 0.8 }));
+      const a = (i / 12) * Math.PI * 2 + i, h = 0.12 + (i * 0.37 % 1) * 0.5;
+      b.position.set(Math.cos(a) * (0.24 + h * 0.06), h, Math.sin(a) * (0.24 + h * 0.06)); b.scale.setScalar(0.01); g.add(b); g.userData.beads.push(b);
+    }
+    return g;
+  },
+  drawGauge(w) {
+    const { ctx, cv, tex } = this.gauge, N = this.N || 6;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    Tex.rr(ctx, 4, 4, cv.width - 8, cv.height - 8, 56); ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.lineWidth = 6; ctx.strokeStyle = '#a98bff'; ctx.stroke();
+    const step = (cv.width - 60) / N;
+    for (let i = 0; i < N; i++) {
+      const x = 30 + step * (i + 0.5);
+      ctx.beginPath(); ctx.arc(x, 64, Math.min(26, step * 0.38), 0, 7); ctx.fillStyle = i < w ? '#7fd0ff' : '#eef2ff'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = i < w ? '#2f86e8' : '#c8cff0'; ctx.stroke();
+      if (i < w) Icon.draw(ctx, 'gota', x - 18, 46, 36);
+    }
+    tex.needsUpdate = true;
+  },
+  /* ---------- Lógica por cuadro ---------- */
+  update(dt) {
+    if (!this.z) return;
+    const t = GU.uTime.value;
+    for (const p of this.puffs) if (!p.done && p.g.visible && (!Drag.held || Drag.held.obj !== p.g)) {
+      p.g.position.y = p.home.y + Math.sin(t * 1.3 + p.ph) * 0.15;
+      if (Math.random() < dt * 2) Particles.emit('vapor', p.g.position, 1, { noScale: true, scale: 0.5, alpha: 0.35, speed: 0.4 });
+    }
+    for (const d of this.drops) if (d.m.visible && d.ready && (!Drag.held || Drag.held.obj !== d.m)) d.m.rotation.y = Math.sin(t + d.ph) * 0.3;
+    this.moldCloud.rotation.y = Math.sin(t * 0.6) * 0.2;
+    if (this.mold.visible && this.N) this.mold.children[0].rotation.z = t * 0.1;
+    if (Math.random() < dt * 3) Particles.emit('sparkle', this.mirror.position.clone().add(TMP.v1.set(U.rand(-.8, .8), 2.2 + U.rand(-.8, .8), 0)), 1, { noScale: true, color: '#e0f6ff', scale: 0.5 });
+    /* gotitas en el vaso frío */
+    if (this.beadT !== undefined && this.beadT < 1) {
+      this.beadT = Math.min(1, this.beadT + dt * 0.28);
+      this.cold.userData.beads.forEach((b, i) => { const k = U.clamp(this.beadT * 1.6 - i / 12 * 0.6, 0, 1); b.scale.setScalar(0.01 + k); });
+    }
+    if (this.hotOnSpot && Math.random() < dt * 2) Particles.emit('vapor', this.hot.position.clone().add(TMP.v1.set(0, 0.7, 0)), 1, { noScale: true, scale: 0.3, alpha: 0.25 });
+    /* Modo Juguete: nubes que llueven */
+    for (const c of this.toyClouds) if (c.m.visible) {
+      c.m.position.y += Math.sin(t * 1.5 + c.m.id) * dt * 0.1;
+      if (c.rainT > 0) { c.rainT -= dt; Particles.emit('rain', c.m.position.clone().add(TMP.v1.set(0, -0.3, 0)), 1, { noScale: true, scale: 0.4 * c.size, life: 0.35 }); if (c.rainT <= 0) this.splitToy(c); }
+    }
+  },
+  /* ---------- Guion ---------- */
+  async run() {
+    const D = this.D, P = this.P;
+    Game.setState('ZONA_2'); Telemetria.zoneStart(2); Hints.usedZone = 0;
+    UI.setZone(D); UI.hud(true); Music.setLayers(1); Ambience.set({ agua: 0.2, viento: 1, pajaros: 0.3 });
+    CamRig.showMarkers([]);
+    await UI.say(D.intro);
+    Tools.lensTargets.push({ pos: this.footprint.position, onFound: () => { this.footprint.material.uniforms.uFound.value = 1; Particles.emit('sparkle', this.footprint.position, 12); UI.hint(D.secretos.huella, 'perla'); Progress.diaryAdd('huella2'); Progress.addGotas(1, this.footprint.position); if (Progress.hiddenFound(2, 'huella') >= 2) Progress.badge('explorador'); } });
+    /* PASO 1: guiar el vapor al frío */
+    await this.stepGuide();
+    Progress.diaryAdd('condensacion');
+    await UI.say(D.guiar.explicacion);
+    /* PASO 2: fusionar gotitas */
+    await UI.say(D.fusionar.intro);
+    await this.stepMerge();
+    Progress.diaryAdd('nube'); Music.setLayers(2);
+    /* PASO 3: el vaso con hielo */
+    CamRig.showMarkers(['z2_mesa']);
+    UI.objective('Ve a la mesa: toca la flecha brillante.', 'flecha');
+    Hints.set(['Toca la flecha que dice Mesa.'], CamRig.markers.find(m => m.name === 'z2_mesa').g, 'condensacion');
+    await Flow.until(() => CamRig.cur === 'z2_mesa' && !CamRig.moving);
+    CamRig.showMarkers(['z2_cielo']);
+    await UI.say(D.vaso.intro);
+    await this.stepGlass();
+    Progress.diaryAdd('vaso'); Music.setLayers(3);
+    /* CERRADURA: acertijo de letras */
+    CamRig.showMarkers(['z2_acertijo', 'z2_cielo']);
+    UI.objective('¡Ahora el acertijo! Toca la flecha del Acertijo.', 'candado');
+    Hints.set(['Toca la flecha que dice Acertijo.'], CamRig.markers.find(m => m.name === 'z2_acertijo').g, 'condensacion');
+    await Flow.until(() => CamRig.cur === 'z2_acertijo' && !CamRig.moving);
+    CamRig.showMarkers([]);
+    await UI.say(D.cerradura.intro);
+    await this.stepRiddle();
+    /* PREMIO */
+    Sfx.play('pop'); Particles.emit('puff', this.chest.position, 16, { color: '#ffffff' });
+    Tweens.add({ dur: 0.6, ease: Ease.outBack, onUpdate: k => this.chest.scale.set(1 + k * 0.6, 1 - k * 0.5, 1 + k * 0.6) });
+    await ZK.crystalReward(this, this.crystal, 2, this.chest.position.clone().add(ZK.V(0, 0.4, 0)));
+    Progress.sticker('condensacion'); Progress.diaryAdd('cristal2');
+    await UI.say(D.final);
+    await ZK.note(this.board.position.clone().add(ZK.V(1.9, -0.6, 0.4)), D.nota);
+    /* gancho: adelanto de la Cumbre Nevada */
+    await CamRig.focus(this.st.z2_cielo.pos.clone(), World.P.nevado.clone().add(ZK.V(0, 18, 0)), 45, 1.8);
+    Kuntur.flyBy(World.P.nevado.clone().add(ZK.V(8, 16, 12)));
+    await UI.say(D.gancho);
+  },
+  stepGuide() {
+    const D = this.D, ch = new Challenge('condensacion'), fin = deferred(); let done = 0;
+    ZoneKit.steps(D, 0, 4, 0); UI.objective(D.pasos[0].objetivo, 'vapor');
+    const mirPos = this.mirror.position.clone().add(ZK.V(0, 2.2, 0)), warmPos = this.warm.position.clone().add(ZK.V(0, 0.8, 0));
+    Drag.addTarget({ id: 'espejo', pos: mirPos, radius: 1.3, pulse: this.mirror, accepts: r => !!r.obj.userData.puff });
+    Drag.addTarget({ id: 'tibia', pos: warmPos, radius: 1.0, accepts: r => !!r.obj.userData.puff });
+    this.puffs.forEach((p, i) => {
+      p.g.userData.puff = true; const at = ch.attempt();
+      Drag.addDraggable(p.g, { name: 'Vapor de agua', size: 0.55,
+        bounds: new THREE.Box3(this.P(-8, this.T + 0.3, -3), this.P(2, this.T + 4.5, 4)),
+        onDrop: (t) => { if (t.id === 'espejo') return 'snap'; at.fail(warmPos.clone(), D.guiar.tibio); Particles.emit('heat', warmPos, 6); return 'reject'; },
+        onSnapped: () => {
+          p.done = true; Drag.enable(p.g, false); at.ok(mirPos.clone()); done++; ZoneKit.steps(D, 0, 4, done);
+          UI.hint(D.guiar.condensa, 'perla'); Sfx.play('glass');
+          Tweens.add({ dur: 0.6, ease: Ease.inQuad, onUpdate: k => p.g.scale.setScalar(1 - k), onDone: () => { p.g.visible = false; } });
+          Particles.emit('sparkle', mirPos, 10, { color: '#bfe8ff' });
+          this.spawnDrops(i, mirPos);
+          if (done === 4) fin.resolve();
+        } });
+    });
+    Hints.set(D.pasos[0].pistas, () => this.mirror, 'condensacion');
+    Glow.pulse(this.puffs[0].g, 4);
+    return fin.then(() => ch.done(mirPos.clone()));
+  },
+  spawnDrops(i, from) {
+    for (const k of [i * 2, i * 2 + 1]) {
+      const d = this.drops[k]; d.m.visible = true; d.m.position.copy(from); d.ready = false;
+      Tweens.vec(d.m.position, d.spot, 0.9, Ease.outBack, () => { d.ready = true; Drag.setHome(d.m, d.spot); }, d.m.uuid);
+    }
+  },
+  stepMerge() {
+    const D = this.D, N = this.N = D.fusionar.tamano[Settings.dificultad] || 6;
+    let worth = 0, mergedOnce = false; const ch = new Challenge('condensacion'), fin = deferred();
+    this.drawGauge(0); ZoneKit.steps(D, 1, N, 0);
+    UI.objective(D.pasos[1].objetivo, 'nube');
+    Glow.pulse(this.mold, 4);
+    const moldPos = this.mold.position.clone();
+    const grow = () => { const s = Math.min(1, worth / N); Tweens.add({ dur: .5, ease: Ease.outBack, onUpdate: k => this.moldCloud.scale.setScalar(0.01 + s * (0.6 + 0.4 * k)) }); };
+    Drag.addTarget({ id: 'molde', pos: moldPos, radius: 1.5, pulse: this.mold, accepts: r => !!r.obj.userData.drop });
+    for (const d of this.drops) {
+      Drag.addTarget({ id: 'gota', drop: d, pos: () => d.m.position, radius: 0.55, accepts: r => !!r.obj.userData.drop && r.obj !== d.m && d.m.visible && d.ready && d.worth + (r.obj.userData.d ? r.obj.userData.d.worth : 1) <= 4 });
+      d.m.userData.d = d;
+      Drag.addDraggable(d.m, { name: 'Gotita', size: 0.4, bounds: new THREE.Box3(this.P(-1, this.T + 0.4, -3), this.P(7, this.T + 4.5, 4)),
+        onPick: () => { if (!d.ready) { d.ready = true; } },
+        onDrop: (t) => (t.id === 'molde' || t.id === 'gota') ? 'snap' : 'reject',
+        onSnapped: (t) => {
+          d.m.visible = false; d.ready = false;
+          const a = ch.attempt();
+          if (t.id === 'gota') {
+            const o = t.drop; o.worth += d.worth; d.worth = 0;
+            Tweens.add({ dur: .45, ease: Ease.outBack, onUpdate: k => o.m.scale.setScalar(0.24 * Math.sqrt(o.worth) * (0.8 + 0.2 * k)) });
+            Sfx.play('bloop'); a.ok(o.m.position.clone(), { kind: 'micro', gotas: mergedOnce ? 0 : 1 }); mergedOnce = true;
+            UI.hint(D.fusionar.junta, 'perla');
+            return;
+          }
+          worth += d.worth; d.worth = 0; grow(); this.drawGauge(worth); ZoneKit.steps(D, 1, N, Math.min(N, worth));
+          Sfx.play('plop'); a.ok(moldPos.clone(), { kind: 'micro' });
+          if (worth >= N) fin.resolve(); else UI.hint(D.fusionar.crece, 'perla');
+        } });
+    }
+    Hints.set(D.pasos[1].pistas, () => { const d = this.drops.find(x => x.m.visible); return d ? d.m : this.mold; }, 'condensacion');
+    return fin.then(() => {
+      UI.hint(D.fusionar.lista, 'perla'); Particles.emit('sparkle', moldPos, 20, { color: '#ffffff' });
+      for (const d of this.drops) if (d.m.visible) { Drag.enable(d.m, false); const m = d.m; Tweens.add({ dur: .5, onUpdate: k => m.scale.setScalar(0.24 * (1 - k) + 0.001), onDone: () => m.visible = false }); }
+      ch.done(moldPos.clone());
+    });
+  },
+  stepGlass() {
+    const D = this.D, ch = new Challenge('condensacion'), fin = deferred();
+    ZoneKit.steps(D, 2, 3, 0); UI.objective(D.pasos[2].objetivo, 'vaso');
+    let onSpot = null, beadsTouched = 0;
+    Drag.addTarget({ id: 'spot', pos: this.spot, radius: 0.6, pulse: this.spotRing, accepts: r => !!r.obj.userData.glass && !onSpot });
+    const reg = (g, cold) => {
+      g.userData.glass = true;
+      Drag.addDraggable(g, { name: cold ? 'Vaso con hielo' : 'Vaso tibio', size: 0.4, plane: 'horizontal', planeY: this.tableTop, groundY: this.tableTop,
+        bounds: new THREE.Box3(this.P(4.3, 0, 3.0), this.P(7.6, 40, 6.0)),
+        onSnapped: () => {
+          onSpot = g; Drag.enable(g, false);
+          if (cold) {
+            const a = ch.attempt(); a.ok(this.spot.clone().add(ZK.V(0, .8, 0)), { kind: 'micro' }); ZoneKit.steps(D, 2, 3, 1);
+            UI.objective(D.vaso.espera, 'ojo'); this.beadT = 0;
+            Flow.wait(4.2).then(() => {
+              const b = ch.attempt(); b.ok(this.cold.position.clone().add(ZK.V(0, .6, 0)), { kind: 'micro' }); ZoneKit.steps(D, 2, 3, 2);
+              UI.objective(D.vaso.toca, 'gota'); Glow.pulse(this.cold, 4);
+              Drag.addClickable(this.cold, { name: 'Gotitas del vaso', radius: 0.55, onClick: () => {
+                beadsTouched++; Sfx.play('drip'); Particles.emit('splash', this.cold.position.clone().add(ZK.V(0, .4, 0)), 4, { scale: 0.4 });
+                if (beadsTouched === 3) { Drag.enable(this.cold, false); fin.resolve(); }
+              } });
+            });
+          } else {
+            this.hotOnSpot = true;
+            Flow.wait(3).then(() => {
+              UI.hint(D.vaso.tibio, 'perla'); Progress.addGotas(1, this.hot.position);
+              this.hotOnSpot = false; onSpot = null;
+              Drag.returnHome(this.hot.userData.rec, 0.6, Ease.outBack);
+            });
+          }
+        } });
+    };
+    reg(this.cold, true); reg(this.hot, false);
+    Hints.set(D.pasos[2].pistas, () => this.cold, 'condensacion');
+    Glow.pulse(this.cold, 4);
+    return fin.then(async () => {
+      ZoneKit.steps(D, 2, 3, 3); UI.hideObjective();
+      await UI.say(D.vaso.explicacion);
+      ch.done(this.cold.position.clone().add(ZK.V(0, 1, 0)));
+    });
+  },
+  stepRiddle() {
+    const D = this.D, C = D.cerradura, ans = C.respuesta[Settings.dificultad] || 'NUBE';
+    const riddle = CONTENIDO.acertijos.find(a => a.respuesta === ans) || CONTENIDO.acertijos[0];
+    const B = this.board, { ctx, cv, tex } = B.userData.canvas, W = cv.width, H = cv.height, bw = B.userData.w, bh = B.userData.h;
+    const filled = {}, N = ans.length;
+    const slotX = i => (i - (N - 1) / 2) * 0.72;
+    const draw = () => {
+      ZK.paper(ctx, W, H);
+      ctx.fillStyle = '#6a3d1a'; ctx.font = 'italic 800 24px "Trebuchet MS", sans-serif'; ctx.textAlign = 'center';
+      riddle.texto.split('\n').forEach((l, i) => ctx.fillText(l, W / 2, 40 + i * 32));
+      for (let i = 0; i < N; i++) {
+        const cx = (slotX(i) / bw + 0.5) * W, cy = (0.5 + 0.55 / bh) * H, s = 0.62 / bw * W;
+        ctx.setLineDash(filled[i] ? [] : [10, 8]); ctx.lineWidth = 5; ctx.strokeStyle = filled[i] ? '#22b878' : '#8b6bff';
+        Tex.rr(ctx, cx - s / 2, cy - s / 2, s, s, 14); ctx.fillStyle = filled[i] ? '#d8f8ea' : 'rgba(255,255,255,.9)'; ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = '#8b6bff'; ctx.font = '800 20px "Trebuchet MS", sans-serif'; ctx.fillText(String(i + 1), cx, cy + s / 2 + 22);
+      }
+      Icon.draw(ctx, 'altavoz', W - 60, 10, 46);
+      tex.needsUpdate = true;
+    };
+    draw();
+    Drag.addClickable(B, { name: 'Escuchar el acertijo', onClick: () => Voz.say(riddle.texto, 'polvito') });
+    if (Settings.lecturaAuto) Voz.say(riddle.texto, 'polvito');
+    UI.hint('Toca la pizarra para escuchar el acertijo.', 'perla');
+    const letters = ans.split('');
+    const pool = C.letrasExtra.split('').filter(l => !letters.includes(l));
+    for (let i = 0; i < (C.distractores[Settings.dificultad] || 0); i++) letters.push(pool[i % pool.length]);
+    U.shuffle(letters);
+    const n = TMP.v1.set(0, 0, 1).applyQuaternion(B.quaternion).clone();
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(n, B.position.clone().addScaledVector(n, 0.3));
+    const ch = new Challenge('condensacion'), fin = deferred(); let left = N;
+    ZoneKit.steps(D, 3, N, 0); UI.objective(D.pasos[3].objetivo, 'candado');
+    for (let i = 0; i < N; i++) Drag.addTarget({ id: 's' + i, idx: i, pos: B.localToWorld(ZK.V(slotX(i), -0.55, 0.3)), radius: 0.4 });
+    const tiles = [];
+    letters.forEach((L, i) => {
+      const t = ZK.letterTile(L, ['#d8c9ff', '#ffd8f0', '#c8f0ff', '#fff3b0'][i % 4]); this.z.disp.add(t.userData.tex);
+      t.position.copy(B.localToWorld(ZK.V((i - (letters.length - 1) / 2) * 0.72, -bh / 2 - 0.45, 0.3))); t.quaternion.copy(B.quaternion); this.z.group.add(t);
+      const at = ch.attempt(); tiles.push(t);
+      Drag.addDraggable(t, { name: 'Letra ' + L, size: 0.45, plane, lift: 0, shadow: false,
+        onDrop: (tg) => { if (ans[tg.idx] === L && !filled[tg.idx]) return 'snap'; at.fail(t.position.clone(), 'Esa letra va en otro lugar. ¡Prueba otra!'); return 'reject'; },
+        onSnapped: (tg) => { filled[tg.idx] = true; tg.enabled = false; Drag.enable(t, false); at.ok(t.position.clone()); draw(); ZoneKit.steps(D, 3, N, N - left + 1); if (--left === 0) fin.resolve(); } });
+    });
+    Hints.set(D.pasos[3].pistas, () => { const k = [...Array(N).keys()].find(i => !filled[i]); return tiles.find(t => t.userData.letter === ans[k] && t.userData.rec.enabled) || B; }, 'condensacion');
+    return fin.then(() => { ch.done(B.position.clone()); Sfx.play('fanfare', { vol: .6 }); UI.toast('¡' + ans + '!', 'gold', 'nube'); });
+  },
+  openMist() {
+    if (this.mistOpen) return; this.mistOpen = true;
+    Drag.enable(this.mist, false); Sfx.play('fiu');
+    this.mist.children.forEach((s, i) => { const h = s.userData.home.clone(), to = h.clone().add(ZK.V((i % 3 - 1) * 1.6, 0.6, 0.4)); Tweens.add({ dur: 1.0, ease: Ease.outBack, onUpdate: k => { s.position.lerpVectors(h, to, k); s.scale.setScalar(1 - k * 0.6); } }); });
+    Particles.emit('sparkle', this.rainbow.position.clone().add(ZK.V(0, 1, 0)), 20);
+    UI.hint(this.D.secretos.arcoiris, 'perla'); Progress.sticker('s_arcoiris'); Progress.diaryAdd('arcoiris');
+    if (Progress.hiddenFound(2, 'arcoiris') >= 2) Progress.badge('explorador');
+  },
+  /* ---------- Modo Juguete: nubes para jugar ---------- */
+  async toy() {
+    Game.setState('MODO_JUGUETE'); this.toyMode = true;
+    await CamRig.go('z2_cielo', 1.4);
+    UI.hint(this.D.jugueteAyuda, 'perla');
+    this.toyClouds.forEach((c, i) => {
+      c.m.visible = true; c.size = 1; c.m.scale.setScalar(1); c.m.position.copy(this.P(-4 + i * 2, this.T + 2.2 + (i % 2) * 0.6, 1.0));
+      Drag.addTarget({ id: 'toy', tc: c, pos: () => c.m.position, radius: 0.8, accepts: r => !!r.obj.userData.toy && r.obj !== c.m && c.m.visible });
+      c.m.userData.toy = true;
+      Drag.addDraggable(c.m, { name: 'Nubecita', size: 0.6, free: true, reenable: true, bounds: new THREE.Box3(this.P(-7, this.T + 1, -2), this.P(7, this.T + 4.5, 3)),
+        onDrop: (t) => 'snap', onSnapped: (t) => this.mergeToy(c, t.tc) });
+    });
+    Music.setLayers(4);
+    await UI.toy(CONFIG.tiempos.modoJugueteSeg, this.D.juguete);
+    this.toyMode = false;
+    this.toyClouds.forEach(c => { Drag.enable(c.m, false); c.m.visible = false; });
+  },
+  mergeToy(a, b) {
+    a.m.visible = false; Drag.enable(a.m, false);
+    b.size += a.size; b.m.scale.setScalar(Math.sqrt(b.size)); Sfx.marimba(Sfx.penta(b.size + 3, 67), 0, 0.3); Particles.emit('sparkle', b.m.position, 8);
+    if (b.size >= 3) { b.rainT = 3; Sfx.play('splash', { vol: 0.5 }); UI.toast('¡La nube pesa mucho y llueve!', 'calm', 'lluvia'); }
+  },
+  splitToy(c) {
+    const others = this.toyClouds.filter(x => !x.m.visible);
+    c.size = 1; c.m.scale.setScalar(1);
+    others.forEach((o, i) => { o.m.visible = true; o.size = 1; o.m.scale.setScalar(1); o.m.position.copy(c.m.position).add(ZK.V((i - 1) * 1.4, 0.4, 0)); Drag.enable(o.m, true); });
+  },
+  teardown() { CamRig.clearMarkers('z2'); if (this.z) ZoneKit.end(this.z); this.z = null; }
+};
+
+/* =====================================================================
+   SECCIÓN 17 · ZONA 3: LA CUMBRE NEVADA (precipitación)
+   Pasos: máquina del clima (perilla + palanca) → pedidos del valle →
+   derretir la nieve con un rayo de sol (nace el arroyo) → fotos del clima
+   ===================================================================== */
+const Zona3 = {
+  id: 3, D: null, z: null, st: {}, first: 'z3_clima', M: new THREE.Vector3(-5, 9, -23),
+  explore: false, precipT: 0, precipMode: null, stable: 0, lastMode: null, rainAcc: 0, toyMode: false,
+  build() {
+    const D = this.D = CONTENIDO.zonas[2], M = this.M;
+    const z = this.z = ZoneKit.begin('z3'), G = z.group;
+    const T = this.T = M.y + 0.15;
+    const P = this.P = (x, y, zz) => new THREE.Vector3(M.x + x, y, M.z + zz);
+    this.st = {
+      z3_clima:    { pos: P(0, T + 4.0, 9.8), tgt: P(0, T + 2.3, -2.5) },
+      z3_deshielo: { pos: P(3.6, T + 4.4, 8.0), tgt: P(5.0, T + 0.3, -1.9) },
+      z3_fotos:    { pos: P(0, T + 2.7, 0.4), tgt: P(0, T + 1.9, -6.8) }
+    };
+    for (const k in this.st) CamRig.define(k, this.st[k].pos, this.st[k].tgt, 55);
+    CamRig.addMarker('z3_deshielo', P(3.4, T, 3.0), 'Nieve');
+    CamRig.addMarker('z3_fotos', P(-2.0, T, -0.4), 'Cofre');
+    CamRig.addMarker('z3_clima', P(0, T, 4.6), 'Nube');
+    /* Meseta de hielo de gelatina */
+    const h = M.y + 3;
+    const pil = new THREE.Mesh(new THREE.CylinderGeometry(8, 9.6, h, 30, 1), jellyMat({ a: '#a8d0ff', b: '#eef8ff', glow: 0.35, rim: '#ffffff', sss: '#d8f0ff', hMin: -h / 2, hMax: h / 2 }));
+    pil.position.set(M.x, M.y - h / 2, M.z); G.add(pil);
+    const top = new THREE.Mesh(new THREE.CylinderGeometry(8.1, 8.1, 0.32, 30), jellyMat({ a: '#dfeaff', b: '#f2f7ff', glow: 0.12, rim: '#b8d4ff', hMin: -0.2, hMax: 0.2 })); top.position.set(M.x, M.y, M.z); G.add(top);
+    const bumps = []; const sp = new THREE.SphereGeometry(1, 10, 8);
+    for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2; bumps.push({ geo: sp.clone(), matrix: mtx(Math.cos(a) * 7.6, 0.1, Math.sin(a) * 7.6, 0.9, 0.45, 0.9), color: i % 2 ? '#ffffff' : '#e8f4ff' }); }
+    sp.dispose();
+    const bm = new THREE.Mesh(mergeGeos(bumps), jellyMat({ a: '#e8f0ff', vcol: true, glow: 0.15 })); bm.position.copy(P(0, T, 0)); G.add(bm);
+    /* Nube de la máquina del clima */
+    const cl = this.cloud = ZK.cloud(14, 2.3, { size: 1.05, colors: ['#ece6ff', '#dcd4f6', '#f4f0ff'], glow: 0.6 }); cl.position.copy(P(0, T + 6.2, -3)); G.add(cl);
+    this.cloudPos = cl.position.clone();
+    /* Consola: perilla (frío/templado), palanca (viento) y botón ¡Llover! */
+    const con = this.console = new THREE.Group(); con.position.copy(P(0, T, 2.7)); G.add(con);
+    const cb = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.7, 1.1), toonMat('#b9a6ec', { unique: true })); cb.position.y = 0.35; con.add(cb); addOutline(cb, 0.03);
+    this.knob = new Knob({ value: 0.85, icons: ['copo', 'sol'], color: '#cfe8ff', color2: '#ffb37a', onChange: () => this.onControls() });
+    this.knob.group.position.set(-1.15, 0.72, 0); this.knob.group.rotation.x = 0.4; this.knob.group.scale.setScalar(0.65); con.add(this.knob.group);
+    const kl = labelSprite('Temperatura', { icon: 'termometro', h: 0.22 }); kl.position.set(-1.15, 1.55, 0); con.add(kl);
+    this.lever = new Lever({ value: 0, icons: ['nube', 'viento'], onChange: () => this.onControls() });
+    this.lever.group.position.set(1.2, 0.7, 0); this.lever.group.scale.setScalar(0.8); con.add(this.lever.group);
+    const ll = labelSprite('Viento', { icon: 'viento', h: 0.22 }); ll.position.set(1.2, 1.75, 0); con.add(ll);
+    const btn = this.button = new THREE.Group(); btn.position.set(0, 0.72, 0.1); con.add(btn);
+    const bdome = new THREE.Mesh(new THREE.SphereGeometry(0.38, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2), jellyMat({ a: '#ffc6e3', b: '#ff5aa7', glow: 0.9, hMin: 0, hMax: 0.4 })); btn.add(bdome); addOutline(bdome, 0.03, '#c23a7c');
+    const bl = labelSprite('¡Llover!', { icon: 'lluvia', h: 0.24, bg: '#ffe0f0' }); bl.position.y = 0.75; btn.add(bl);
+    this.sign = Tex.canvas(512, 160); z.disp.add(this.sign.tex);
+    const sg = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.69), new THREE.MeshBasicMaterial({ map: this.sign.tex, transparent: true })); sg.position.set(0, 2.25, -0.2); con.add(sg); this.signMesh = sg;
+    /* Efectos en el suelo: manto de nieve y charquito */
+    const snow = this.snowLayer = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.8, 0.3, 24), jellyMat({ a: '#ffffff', b: '#eef6ff', glow: 0.5, hMin: -0.15, hMax: 0.15 }));
+    snow.position.copy(P(0, T, -3)); snow.scale.y = 0.01; G.add(snow);
+    const pw = this.puddleMat = waterMat({ shallow: '#a8f4ff', deep: '#4b8dff', alpha: 0.8, amp: 0.5 });
+    const pud = this.puddle = new THREE.Mesh(waterGeo(Engine.Q.aguaSeg), pw); pud.scale.set(2.4, 1, 2.0); pud.position.copy(P(0, T + 0.18, -3)); pw.uniforms.uFill.value = 0.01; G.add(pud);
+    /* Tablero de pedidos */
+    const pb = this.pedBoard = ZK.board(2.6, 1.5, 300); pb.position.copy(P(-4.5, T + 1.9, 0.6)); G.add(pb);
+    pb.lookAt(this.st.z3_clima.pos.x, pb.position.y, this.st.z3_clima.pos.z);
+    const pleg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 1.9, 6), toonMat('#c8855a')); pleg.position.y = -1.1; pb.add(pleg);
+    /* ---- Deshielo: montones de nieve y rayo de sol ---- */
+    this.piles = [];
+    [[4.0, -1.4], [5.6, -2.9], [6.8, -0.8]].forEach(([x, zz], i) => {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.9, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), jellyMat({ a: '#ffffff', b: '#e8f4ff', glow: 0.5, rim: '#cfe8ff', hMin: 0, hMax: 0.9 }));
+      m.position.copy(P(x, T, zz)); m.scale.set(1, 1.1, 1); G.add(m); addOutline(m, 0.03, '#6aa8e0');
+      this.piles.push({ m, melt: 0, done: false });
+    });
+    const mound = this.mound = new THREE.Mesh(new THREE.SphereGeometry(0.55, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), jellyMat({ a: '#ffffff', b: '#eef6ff', glow: 0.4 }));
+    mound.position.copy(P(2.6, T, -3.7)); G.add(mound); this.moundMelt = 0;
+    const fe = this.feather = new THREE.Mesh(new THREE.SphereGeometry(0.4, 10, 8), toonMat('#8a84d6', { unique: true })); fe.scale.set(0.35, 0.06, 1); fe.rotation.y = 0.6; fe.position.copy(P(2.6, T + 0.08, -3.7)); G.add(fe);
+    const ray = this.ray = new THREE.Group(); ray.position.copy(P(3.4, T + 1.9, 1.8)); G.add(ray);
+    const rs = new THREE.Mesh(new THREE.SphereGeometry(0.32, 16, 12), jellyMat({ a: '#fff6b0', b: '#ffb52e', glow: 1.4, rim: '#ffffff' })); ray.add(rs); addOutline(rs, 0.03, '#c9861a');
+    for (let i = 0; i < 6; i++) { const c = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.24, 6), toonMat('#ffd447')); const a = i / 6 * Math.PI * 2; c.position.set(Math.cos(a) * 0.46, 0, Math.sin(a) * 0.46); c.rotation.z = -Math.cos(a) * Math.PI / 2; c.rotation.x = Math.sin(a) * Math.PI / 2; ray.add(c); }
+    const beam = this.beam = new THREE.Mesh(new THREE.ConeGeometry(0.75, 1.9, 18, 1, true), new THREE.MeshBasicMaterial({ color: '#fff0a0', transparent: true, opacity: 0.22, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
+    beam.position.y = -1.0; ray.add(beam);
+    const rl = labelSprite('Rayo de sol', { icon: 'sol', h: 0.24 }); rl.position.y = 0.65; ray.add(rl);
+    /* arroyo (franja de agua que crece) */
+    const am = this.creekMat = waterMat({ shape: 1, shallow: '#a8f4ff', deep: '#3f9cf0', alpha: 0.9 });
+    const cr = this.creek = new THREE.Mesh(waterGeo(Engine.Q.aguaSeg), am); cr.position.copy(P(6.2, T + 0.2, -1.6)); cr.scale.set(0.01, 1, 0.45); cr.rotation.y = 0.15; G.add(cr);
+    /* ---- Secreto: cortina de carámbanos (lupa) ---- */
+    const ic = new THREE.Group(); ic.position.copy(P(6.0, T, -5.0)); G.add(ic);
+    const arch = new THREE.Mesh(new THREE.TorusGeometry(1.1, 0.22, 8, 20, Math.PI), jellyMat({ a: '#e8f6ff', b: '#9fd0ff', glow: 0.6 })); arch.position.y = 0.2; ic.add(arch);
+    for (let i = 0; i < 7; i++) { const c = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.6 + (i % 3) * 0.2, 6), jellyMat({ a: '#ffffff', b: '#bfe6ff', glow: 0.8, alpha: 0.85 })); const a = Math.PI * (i + 0.5) / 7; c.position.set(Math.cos(a) * 1.1, 0.2 + Math.sin(a) * 1.1 - 0.3, 0.05); c.rotation.x = Math.PI; ic.add(c); }
+    ic.lookAt(this.st.z3_clima.pos.x, ic.position.y, this.st.z3_clima.pos.z);
+    const fp = this.footprint = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.7), secretMat(Tex.icon('huella', 128, { ring: '#dff4ff' })));
+    fp.position.copy(P(6.0, T + 0.55, -5.3)); fp.lookAt(this.st.z3_clima.pos); G.add(fp);
+    /* ---- Cerradura: cofre de hielo con fotos ---- */
+    const fb = this.photoBoard = ZK.board(3.8, 1.5, 320); fb.position.copy(P(0, T + 2.35, -6.7)); G.add(fb); { const c = fb.userData.canvas; ZK.paper(c.ctx, c.cv.width, c.cv.height); c.tex.needsUpdate = true; }
+    fb.lookAt(this.st.z3_fotos.pos.x, fb.position.y, this.st.z3_fotos.pos.z);
+    for (const sx of [-1, 1]) { const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 2.6, 6), toonMat('#c8855a')); leg.position.set(sx * 1.6, -1.5, -0.12); fb.add(leg); }
+    const ich = this.iceChest = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.9, 0.9), jellyMat({ a: '#ffffff', b: '#a8dcff', glow: 0.7, hMin: -0.45, hMax: 0.45 }));
+    ich.position.copy(P(2.9, T + 0.45, -6.3)); G.add(ich); addOutline(ich, 0.03, '#4a8cd8');
+    this.crystal = ZK.crystalMesh('#eef8ff', '#4b8dff', '#2f5fc0'); this.crystal.visible = false; G.add(this.crystal);
+    this.drawSign(); this.drawPedido(null, 0, 0);
+  },
+  mode() { return this.knob.v >= 0.55 ? 'lluvia' : (this.lever.v >= 0.6 ? 'granizo' : 'nieve'); },
+  onControls() { const m = this.mode(); if (m !== this.lastMode) { this.lastMode = m; this.stable = 0; this.drawSign(); Sfx.play('tick'); } },
+  drawSign() {
+    const { ctx, cv, tex } = this.sign, m = this.mode(), N = this.D.clima.nombres;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    Tex.rr(ctx, 6, 6, 500, 148, 40); ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.lineWidth = 6; ctx.strokeStyle = '#4b8dff'; ctx.stroke();
+    Icon.draw(ctx, m === 'lluvia' ? 'lluvia' : m === 'nieve' ? 'copo' : 'granizo', 20, 22, 112);
+    ctx.font = '900 54px "Trebuchet MS", sans-serif'; ctx.fillStyle = '#2a2463'; ctx.textBaseline = 'middle'; ctx.fillText(N[m], 148, 70);
+    ctx.font = '800 26px "Trebuchet MS", sans-serif'; ctx.fillStyle = '#4a4290';
+    ctx.fillText((this.knob.v >= 0.55 ? 'Templado' : this.knob.v < 0.3 ? 'Muy frío' : 'Frío') + ' · ' + (this.lever.v >= 0.6 ? 'Viento fuerte' : 'Sin viento'), 148, 122);
+    tex.needsUpdate = true;
+  },
+  drawPedido(p, i, n) {
+    const B = this.pedBoard, { ctx, cv, tex } = B.userData.canvas, W = cv.width, H = cv.height;
+    ZK.paper(ctx, W, H);
+    ctx.textAlign = 'center'; ctx.fillStyle = '#2a2463';
+    if (!p) { ctx.font = '900 34px "Trebuchet MS", sans-serif'; ctx.fillText('Pedidos del valle', W / 2, 60); Icon.draw(ctx, 'nota', W / 2 - 50, 90, 100); tex.needsUpdate = true; return; }
+    ctx.font = '900 30px "Trebuchet MS", sans-serif'; ctx.fillText('Pedido ' + (i + 1) + ' de ' + n, W / 2, 42);
+    Icon.draw(ctx, p.icono, 26, 70, 110);
+    ctx.textAlign = 'left'; ctx.font = '900 30px "Trebuchet MS", sans-serif'; ctx.fillText(p.quien, 150, 104);
+    ctx.font = '800 26px "Trebuchet MS", sans-serif'; ctx.fillStyle = '#4a4290';
+    const words = p.texto.split(' '); let line = '', y = 150;
+    for (const w of words) { if (ctx.measureText(line + w).width > W - 170) { ctx.fillText(line, 150, y); line = ''; y += 32; } line += w + ' '; }
+    ctx.fillText(line, 150, y);
+    tex.needsUpdate = true;
+  },
+  /* ---------- Por cuadro ---------- */
+  update(dt) {
+    if (!this.z) return;
+    const t = GU.uTime.value;
+    this.cloud.position.y = this.cloudPos.y + Math.sin(t * 0.8) * 0.12;
+    const active = this.explore || this.precipT > 0 || this.toyMode && this.precipT > 0;
+    if (active) {
+      const m = this.precipT > 0 ? this.precipMode : this.mode();
+      if (this.precipT > 0) { this.precipT -= dt; if (this.precipT <= 0) this.onPrecipEnd && this.onPrecipEnd(); }
+      const rate = m === 'lluvia' ? 26 : m === 'nieve' ? 14 : 10;
+      this.rainAcc += rate * dt;
+      const base = TMP.v5.copy(this.cloud.position); base.y -= 0.6;
+      while (this.rainAcc > 1) {
+        this.rainAcc -= 1;
+        if (m === 'lluvia') Particles.emit('rain', base, 1, { noScale: true, scale: 2.0, life: 0.68, big: 2.2 });
+        else if (m === 'nieve') Particles.emit('snow', base, 1, { noScale: true, scale: 2.2, life: 5.2, big: 2.2 });
+        else { Particles.emit('hail', base, 1, { noScale: true, scale: 2.0, life: 0.95, big: 2.0 }); if (Math.random() < 0.4) Particles.emit('splash', TMP.v4.set(base.x + U.rand(-2, 2), this.T + 0.2, base.z + U.rand(-1.6, 1.6)), 1, { noScale: true, color: '#ffffff', scale: 0.6 }); }
+      }
+      if (m === 'lluvia') { this.puddleMat.uniforms.uFill.value = Math.min(1, this.puddleMat.uniforms.uFill.value + dt * 0.3); this.snowLayer.scale.y = Math.max(0.01, this.snowLayer.scale.y - dt * 0.5); if (Math.random() < dt * 4) this.puddleMat.userData.ripple(base.x + U.rand(-1.5, 1.5), base.z + U.rand(-1.2, 1.2), 0.6); }
+      if (m === 'nieve') { this.snowLayer.scale.y = Math.min(1, this.snowLayer.scale.y + dt * 0.12); this.puddleMat.uniforms.uFill.value = Math.max(0.01, this.puddleMat.uniforms.uFill.value - dt * 0.2); }
+      if (Math.random() < dt * (m === 'granizo' ? 6 : 2)) Sfx.play(m === 'granizo' ? 'tick' : m === 'lluvia' ? 'drip' : 'sparkle', { vol: 0.3 });
+      if (this.explore) {
+        if (m === this.lastMode) this.stable += dt; else { this.lastMode = m; this.stable = 0; }
+        if (this.stable > 1.3 && this.onDiscover) this.onDiscover(m);
+      }
+    }
+    /* rayo de sol: derrite montones de nieve */
+    const rp = this.ray.position;
+    this.beam.material.opacity = 0.18 + Math.sin(t * 3) * 0.04;
+    if (this.melting) {
+      for (const p of this.piles) {
+        if (p.done) continue;
+        const d = Math.hypot(rp.x - p.m.position.x, rp.z - p.m.position.z);
+        if (d < 1.1) {
+          p.melt = Math.min(1, p.melt + dt * 0.4);
+          p.m.scale.set(1 - p.melt * 0.6, 1.1 * (1 - p.melt) + 0.02, 1 - p.melt * 0.6);
+          if (Math.random() < dt * 10) Particles.emit('splash', p.m.position.clone().add(TMP.v1.set(0, 0.3, 0)), 1, { noScale: true, scale: 0.5 });
+          if (Math.random() < dt * 3) Sfx.play('drip', { vol: 0.4 });
+          if (p.melt >= 1) { p.done = true; p.m.visible = false; this.onPileMelted && this.onPileMelted(p); }
+        }
+      }
+    }
+    if (!this.featherFound && (this.melting || this.toyMode)) {
+      const d = Math.hypot(rp.x - this.mound.position.x, rp.z - this.mound.position.z);
+      if (d < 0.9) { this.moundMelt += dt * 0.5; this.mound.scale.set(1 - this.moundMelt * 0.5, Math.max(0.02, 1 - this.moundMelt), 1 - this.moundMelt * 0.5); if (this.moundMelt >= 1) this.findFeather(); }
+    }
+    if (this.creekOn) {
+      this.creek.scale.x = Math.min(2.4, this.creek.scale.x + dt * 0.8);
+      if (Math.random() < dt * 12) Particles.emit('splash', this.P(8.0, this.T, -1.3), 1, { noScale: true, scale: 0.6 });
+      if (Math.random() < dt * 6) Particles.emit('rain', this.P(8.1, this.T - 0.3, -1.3), 1, { noScale: true, scale: 0.2, life: 1.2 });
+    }
+  },
+  /* ---------- Guion ---------- */
+  async run() {
+    const D = this.D;
+    Game.setState('ZONA_3'); Telemetria.zoneStart(3); Hints.usedZone = 0;
+    UI.setZone(D); UI.hud(true); Music.setLayers(1); Ambience.set({ agua: 0.3, viento: 1.2, pajaros: 0.2 });
+    CamRig.showMarkers([]);
+    await UI.say(D.intro);
+    Tools.lensTargets.push({ pos: this.footprint.position, onFound: () => { this.footprint.material.uniforms.uFound.value = 1; Particles.emit('sparkle', this.footprint.position, 12); UI.hint(D.secretos.huella, 'perla'); Progress.diaryAdd('huella3'); Progress.addGotas(1, this.footprint.position); if (Progress.hiddenFound(3, 'huella') >= 2) Progress.badge('explorador'); } });
+    Drag.addControl(this.knob.group, this.knob, { name: 'Perilla de temperatura', radius: 0.6 });
+    Drag.addControl(this.lever.group, this.lever, { name: 'Palanca de viento', radius: 0.7 });
+    await this.stepExplore();
+    Progress.diaryAdd('precipitacion'); await UI.say(D.clima.explicacion); Music.setLayers(2);
+    await this.stepOrders();
+    Progress.diaryAdd('clima'); Music.setLayers(3);
+    /* deshielo */
+    CamRig.showMarkers(['z3_deshielo']);
+    UI.objective('Ve a la nieve: toca la flecha brillante.', 'flecha');
+    Hints.set(['Toca la flecha que dice Nieve.'], CamRig.markers.find(m => m.name === 'z3_deshielo').g, 'precipitacion');
+    await Flow.until(() => CamRig.cur === 'z3_deshielo' && !CamRig.moving);
+    CamRig.showMarkers(['z3_clima']);
+    await UI.say(D.deshielo.intro);
+    await this.stepMelt();
+    Progress.diaryAdd('deshielo');
+    /* cerradura */
+    CamRig.showMarkers(['z3_fotos', 'z3_clima']);
+    UI.objective('¡Abre el cofre de hielo! Toca la flecha del Cofre.', 'candado');
+    Hints.set(['Toca la flecha que dice Cofre.'], CamRig.markers.find(m => m.name === 'z3_fotos').g, 'precipitacion');
+    await Flow.until(() => CamRig.cur === 'z3_fotos' && !CamRig.moving);
+    CamRig.showMarkers([]);
+    await UI.say(D.cerradura.intro);
+    await this.stepPhotos();
+    Sfx.play('glass'); Particles.emit('sparkle', this.iceChest.position, 20, { color: '#bfe8ff' });
+    Tweens.add({ dur: 0.7, ease: Ease.outBack, onUpdate: k => this.iceChest.scale.set(1 + k * 0.2, 1 - k * 0.6, 1 + k * 0.2) });
+    await ZK.crystalReward(this, this.crystal, 3, this.iceChest.position.clone().add(ZK.V(0, 0.5, 0)));
+    Progress.sticker('precipitacion'); Progress.diaryAdd('cristal3');
+    await UI.say(D.final);
+    /* Kuntur trae noticias (gancho emocional) */
+    Kuntur.flyBy(this.st.z3_fotos.tgt.clone().add(ZK.V(0, 1.5, 0)));
+    await Flow.wait(2.5);
+    await UI.say(D.kuntur);
+    await CamRig.focus(this.st.z3_clima.pos.clone(), World.P.pueblo.clone(), 45, 1.8);
+    await UI.say(D.gancho);
+  },
+  stepExplore() {
+    const D = this.D, ch = new Challenge('precipitacion'), fin = deferred(), found = new Set();
+    ZoneKit.steps(D, 0, 3, 0); UI.objective(D.pasos[0].objetivo, 'nube');
+    this.explore = true; this.lastMode = this.mode(); this.stable = 0;
+    this.onDiscover = (m) => {
+      if (found.has(m)) return; found.add(m);
+      ch.attempt().ok(this.cloud.position.clone().add(ZK.V(0, -1, 0)), { kind: 'micro' });
+      UI.hint(D.clima.descubre[m], 'perla'); ZoneKit.steps(D, 0, 3, found.size);
+      const left = ['lluvia', 'nieve', 'granizo'].filter(x => !found.has(x));
+      if (left.length) UI.objective(D.pasos[0].sub[['lluvia', 'nieve', 'granizo'].indexOf(left[0])], left[0] === 'lluvia' ? 'lluvia' : left[0] === 'nieve' ? 'copo' : 'granizo');
+      if (found.size === 3) fin.resolve();
+    };
+    Hints.set(D.pasos[0].pistas, () => this.knob.group, 'precipitacion');
+    Glow.pulse(this.knob.group, 4); Glow.pulse(this.lever.group, 4);
+    return fin.then(() => { this.explore = false; this.onDiscover = null; ch.done(this.cloud.position.clone()); });
+  },
+  stepOrders() {
+    const D = this.D, list = D.pedidos.slice(); if (Difficulty.wantExtra()) list.push(...D.pedidosExtra);
+    U.shuffle(list);
+    const ch = new Challenge('precipitacion'), fin = deferred(); let i = 0, at = ch.attempt();
+    ZoneKit.steps(D, 1, list.length, 0); UI.objective(D.pasos[1].objetivo, 'nota');
+    const show = () => { this.ped = list[i]; this.drawPedido(list[i], i, list.length); Glow.pulse(this.pedBoard, 3); UI.hint(list[i].texto, 'perla'); Sfx.play('paper'); };
+    show();
+    Drag.addClickable(this.button, { name: '¡Llover!', radius: 0.55, onClick: () => {
+      if (this.precipT > 0 || i >= list.length) return;
+      Sfx.play('bloop'); Tweens.add({ dur: .3, onUpdate: k => this.button.scale.set(1, 1 - Math.sin(k * Math.PI) * 0.4, 1) });
+      this.precipMode = this.mode(); this.precipT = 2.6;
+      this.onPrecipEnd = () => {
+        const p = list[i], N = D.clima.nombres;
+        if (this.precipMode === p.pide) {
+          at.ok(this.pedBoard.position.clone(), {}); UI.toast(D.pedidoBien, 'mint', p.icono);
+          i++; ZoneKit.steps(D, 1, list.length, i);
+          if (i >= list.length) { fin.resolve(); return; }
+          at = ch.attempt(); setTimeout(show, 900);
+        } else {
+          at.fail(this.cloud.position.clone(), D.pedidoMal.replace('{cayo}', N[this.precipMode].toLowerCase()).replace('{pide}', N[p.pide].toLowerCase()));
+        }
+      };
+    } });
+    Hints.set(D.pasos[1].pistas, () => this.pedBoard, 'precipitacion');
+    return fin.then(() => { Drag.enable(this.button, false); this.drawPedido(null); ch.done(this.pedBoard.position.clone()); Progress.diaryAdd('pedidos'); });
+  },
+  stepMelt() {
+    const D = this.D, ch = new Challenge('estados'), fin = deferred(); let n = 0;
+    ZoneKit.steps(D, 2, 3, 0); UI.objective(D.pasos[2].objetivo, 'sol');
+    Drag.addDraggable(this.ray, { name: 'Rayo de sol', size: 0.6, plane: 'horizontal', planeY: this.T + 1.9, lift: 0, free: true, restY: this.T + 1.9, groundY: this.T,
+      bounds: new THREE.Box3(this.P(1.4, 0, -4.8), this.P(7.6, 40, 2.6)) });
+    this.melting = true;
+    this.onPileMelted = (p) => {
+      n++; ch.attempt().ok(p.m.position.clone().add(ZK.V(0, .5, 0)), { kind: 'micro' }); ZoneKit.steps(D, 2, 3, n);
+      UI.hint(D.deshielo.derrite, 'perla');
+      if (n === 3) fin.resolve();
+    };
+    Hints.set(D.pasos[2].pistas, () => { const p = this.piles.find(x => !x.done); return p ? p.m : this.ray; }, 'estados');
+    Glow.pulse(this.ray, 4);
+    return fin.then(async () => {
+      this.creekOn = true; Sfx.play('splash'); Particles.emit('sparkle', this.creek.position, 20, { color: '#bfe8ff' });
+      ch.done(this.creek.position.clone().add(ZK.V(0, 1, 0)));
+      await Flow.wait(1.2); await UI.say(D.deshielo.arroyo);
+    });
+  },
+  photoTex(kind) {
+    const c = Tex.canvas(256, 192), x = c.ctx; this.z.disp.add(c.tex);
+    const g = x.createLinearGradient(0, 0, 0, 192); g.addColorStop(0, kind === 'lluvia' ? '#bfe0ff' : '#e6f2ff'); g.addColorStop(1, '#ffffff');
+    x.fillStyle = g; x.fillRect(0, 0, 256, 192);
+    x.fillStyle = kind === 'lluvia' ? '#8fd88f' : '#ffffff'; x.fillRect(0, 160, 256, 32);
+    x.fillStyle = '#d8d0f4'; [[70, 48, 34], [120, 38, 42], [175, 50, 34]].forEach(([cx, cy, r]) => { x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill(); });
+    if (kind === 'lluvia') { x.strokeStyle = '#3f8cff'; x.lineWidth = 5; x.lineCap = 'round'; for (let i = 0; i < 14; i++) { const px = 40 + (i * 37) % 180, py = 90 + (i * 23) % 60; x.beginPath(); x.moveTo(px, py); x.lineTo(px - 4, py + 16); x.stroke(); } }
+    if (kind === 'nieve') { for (let i = 0; i < 9; i++) Icon.draw(x, 'copo', 30 + (i * 47) % 190, 78 + (i * 31) % 70, 28); }
+    if (kind === 'granizo') { x.fillStyle = '#ffffff'; x.strokeStyle = '#6aa8e0'; x.lineWidth = 3; for (let i = 0; i < 12; i++) { x.beginPath(); x.arc(30 + (i * 41) % 200, 90 + (i * 29) % 80, 7 + (i % 3) * 2, 0, 7); x.fill(); x.stroke(); } }
+    x.lineWidth = 10; x.strokeStyle = '#ffffff'; x.strokeRect(5, 5, 246, 182);
+    c.tex.needsUpdate = true;
+    return c.tex;
+  },
+  stepPhotos() {
+    const D = this.D, B = this.photoBoard, { ctx, cv, tex } = B.userData.canvas, W = cv.width, H = cv.height, bw = B.userData.w, bh = B.userData.h;
+    const fotos = D.cerradura.fotos, filled = {}, xs = [-1.25, 0, 1.25];
+    const draw = () => {
+      ZK.paper(ctx, W, H); ctx.textAlign = 'center';
+      fotos.forEach((f, i) => {
+        const cx = (xs[i] / bw + 0.5) * W, cy = H * 0.58, w = 0.95 / bw * W, h = 0.72 / bh * H;
+        ctx.setLineDash(filled[f.id] ? [] : [10, 8]); ctx.lineWidth = 5; ctx.strokeStyle = filled[f.id] ? '#22b878' : '#4b8dff';
+        Tex.rr(ctx, cx - w / 2, cy - h / 2, w, h, 12); ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
+        ctx.font = '900 30px "Trebuchet MS", sans-serif'; ctx.fillStyle = '#2a2463'; ctx.fillText(f.nombre, cx, 40);
+      });
+      tex.needsUpdate = true;
+    };
+    draw();
+    const n = TMP.v1.set(0, 0, 1).applyQuaternion(B.quaternion).clone();
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(n, B.position.clone().addScaledVector(n, 0.3));
+    fotos.forEach((f, i) => Drag.addTarget({ id: f.id, pos: B.localToWorld(ZK.V(xs[i], -0.12, 0.3)), radius: 0.55 }));
+    const ch = new Challenge('precipitacion'), fin = deferred(); let left = fotos.length;
+    ZoneKit.steps(D, 3, left, 0); UI.objective(D.pasos[3].objetivo, 'candado');
+    const order = U.shuffle(fotos.slice());
+    order.forEach((f, i) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.675), new THREE.MeshBasicMaterial({ map: this.photoTex(f.id), side: THREE.DoubleSide }));
+      m.position.copy(B.localToWorld(ZK.V((i - 1) * 1.25, -bh / 2 - 0.55, 0.3))); m.quaternion.copy(B.quaternion); this.z.group.add(m);
+      const at = ch.attempt();
+      Drag.addDraggable(m, { name: 'Foto de ' + f.id, size: 0.5, plane, lift: 0, shadow: false,
+        onDrop: (tg) => { if (tg.id === f.id) return 'snap'; at.fail(m.position.clone(), 'Mira bien la foto: ¿gotas, copos o bolitas?'); return 'reject'; },
+        onSnapped: (tg) => { tg.enabled = false; Drag.enable(m, false); filled[f.id] = true; draw(); at.ok(m.position.clone()); ZoneKit.steps(D, 3, fotos.length, fotos.length - left + 1); if (--left === 0) fin.resolve(); } });
+    });
+    Hints.set(D.pasos[3].pistas, () => B, 'precipitacion');
+    return fin.then(() => ch.done(B.position.clone()));
+  },
+  findFeather() {
+    if (this.featherFound) return; this.featherFound = true; this.mound.visible = false;
+    Tweens.add({ dur: 1, ease: Ease.outBack, onUpdate: k => { this.feather.position.y = this.T + 0.08 + k * 0.6; this.feather.rotation.z = k * 0.6; } });
+    Particles.emit('sparkle', this.feather.position, 16); UI.hint(this.D.secretos.pluma, 'perla');
+    Progress.sticker('s_pluma'); Progress.diaryAdd('pluma');
+    if (Progress.hiddenFound(3, 'pluma') >= 2) Progress.badge('explorador');
+  },
+  async toy() {
+    Game.setState('MODO_JUGUETE'); this.toyMode = true;
+    await CamRig.go('z3_clima', 1.4);
+    UI.hint(this.D.jugueteAyuda, 'perla');
+    Drag.addClickable(this.button, { name: '¡Llover!', radius: 0.55, onClick: () => { if (this.precipT > 0) return; Sfx.play('bloop'); this.precipMode = this.mode(); this.precipT = 3; this.onPrecipEnd = null; Progress.addGotas(0, null); } });
+    this.explore = true; this.onDiscover = null;
+    Music.setLayers(4);
+    await UI.toy(CONFIG.tiempos.modoJugueteSeg, this.D.juguete);
+    this.explore = false; this.toyMode = false;
+  },
+  teardown() { CamRig.clearMarkers('z3'); this.melting = false; if (this.z) ZoneKit.end(this.z); this.z = null; }
 };
 
 /* =====================================================================
@@ -4319,7 +5301,7 @@ const Zona1 = {
    ===================================================================== */
 const Game = {
   state: 'PANEL_DOCENTE', prev: null, paused: false, nombre: '', zoneTag: 'global', notes: [], playTime: 0,
-  zonasListas: [1],            /* zonas implementadas en esta versión */
+  zonasListas: [1, 2, 3],      /* zonas implementadas en esta versión */
   last: 0, menuOrbit: true,
   setState(s) { this.state = s; Telemetria.log('estado', s); },
   blocked() { return UI.dlgOpen || !!UI.modal; },
@@ -4362,8 +5344,7 @@ const Game = {
       Engine.monitor(dt);
       Flow.update(dt); Tweens.update(dt);
       Drag.update(dt); Tools.update(dt);
-      if (Zona1.z) Zona1.update(dt);
-      if (typeof ZonasExtra !== 'undefined') ZonasExtra.update(dt);
+      for (const zn of this.zones()) if (zn.z) zn.update(dt);
       Behavior.update(dt); Hints.update(dt); Surprises.update(dt);
       Perla.update(dt); Kuntur.update(dt); World.update(dt);
       Particles.update(dt); Glow.update(dt);
@@ -4406,20 +5387,27 @@ const Game = {
     this.menuOrbit = false;
     await this.adventure();
   },
+  zones() { return [Zona1, Zona2, Zona3].concat(typeof Zona4 !== 'undefined' ? [Zona4] : []); },
   async adventure() {
     await Prologo.lab();
     Zona1.build();
     await Prologo.arrival(Zona1);
-    await Zona1.run();
-    await Zona1.toy();
-    if (typeof ZonasExtra !== 'undefined') { await ZonasExtra.run(); return; }
+    let prev = Zona1;
+    for (const zn of this.zones()) {
+      if (!Settings.zonas.includes(zn.id) || !this.zonasListas.includes(zn.id)) continue;
+      if (zn !== prev) { await ZK.travel(prev, zn); prev = zn; }
+      await zn.run();
+      await zn.toy();
+      if (typeof Shop !== 'undefined') await Shop.open();
+    }
+    if (typeof Final !== 'undefined') { await Final.run(prev); return; }
     this.phaseEnd();
   },
   phaseEnd() {
     this.setState('FIN_FASE'); UI.hud(false); UI.hideObjective();
     U.el('endCard').innerHTML = `<div style="width:130px;margin:0 auto">${portrait('perla')}</div>
-      <div class="big">¡Continuará!</div><p>¡Muy bien, ${U.fill('{nombre}')}! Recuperaste el Cristal del Sol.</p>
-      <p>Próxima parada: <b>El País de las Nubes</b>.</p>
+      <div class="big">¡Continuará!</div><p>¡Muy bien, ${U.fill('{nombre}')}! Ya tienes ${Progress.cristales.length} cristales.</p>
+      <p>Próxima parada: <b>El Río y el Valle</b>.</p>
       <div class="row2" style="justify-content:center"><button class="jbtn lila" id="eDiary">Diario</button><button class="jbtn pink" id="eAlbum">Álbum</button><button class="jbtn ghost" id="eSum">Resumen docente</button></div>`;
     UI.show('scrEnd');
     U.el('eDiary').onclick = () => { UI.hide('scrEnd'); UI._back = 'scrEnd'; UI.openDiary(); };
@@ -4429,7 +5417,7 @@ const Game = {
 };
 
 /* Exponer para pruebas y para docentes curiosos (no envía nada a ningún sitio) */
-window.YAKU = { Game, Engine, UI, Zona1, Prologo, Progress, Telemetria, Settings, Drag, CamRig, Perla, Behavior, Difficulty, Tools, Flow, World, Particles };
+window.YAKU = { Game, Engine, UI, Zona1, Zona2, Zona3, ZK, Prologo, Progress, Telemetria, Settings, Drag, CamRig, Perla, Behavior, Difficulty, Tools, Flow, World, Particles };
 window.addEventListener('load', () => { Game.boot().catch(e => { console.error(e); UI.error('Algo falló. Recarga la página, por favor.'); }); });
 </script>
 </body>
