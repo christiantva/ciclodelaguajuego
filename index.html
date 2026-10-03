@@ -42,11 +42,11 @@ button{ font-family:var(--font); }
 /* --- Reflejos del Globo de Cristal (bordes del encuadre) --- */
 #glass{ position:absolute; inset:0; pointer-events:none; z-index:2; overflow:hidden; }
 #glass::before{ content:""; position:absolute; left:-30vw; top:-40vh; width:160vw; height:180vh; border-radius:50%;
-  box-shadow: inset 0 0 90px 30px rgba(255,255,255,.28), inset 0 0 0 2px rgba(255,255,255,.18); }
+  box-shadow: inset 0 0 70px 18px rgba(255,255,255,.12), inset 0 0 0 2px rgba(255,255,255,.12); }
 #glass::after{ content:""; position:absolute; left:3vw; top:6vh; width:38vw; height:70vh; border-radius:50%;
-  border-left:10px solid rgba(255,255,255,.22); border-top:4px solid rgba(255,255,255,.10); filter:blur(5px); transform:rotate(12deg); }
+  border-left:8px solid rgba(255,255,255,.14); border-top:3px solid rgba(255,255,255,.06); filter:blur(5px); transform:rotate(12deg); }
 #glass i{ position:absolute; right:4vw; bottom:8vh; width:26vw; height:50vh; border-radius:50%;
-  border-right:7px solid rgba(255,255,255,.16); filter:blur(4px); transform:rotate(-14deg); }
+  border-right:6px solid rgba(255,255,255,.1); filter:blur(4px); transform:rotate(-14deg); }
 
 #fade{ position:absolute; inset:0; background:radial-gradient(circle, #fffef6 0%, #c9fbf3 60%, #b9d6ff 100%); opacity:0; pointer-events:none; z-index:40; transition:opacity .6s ease; }
 #fade.on{ opacity:1; pointer-events:auto; }
@@ -1189,10 +1189,10 @@ class Disposer {
 const GU = {   /* uniformes globales compartidos por todos los materiales */
   uTime: { value: 0 },
   uSunDir: { value: new THREE.Vector3(0.45, 0.8, 0.4).normalize() },
-  uSunCol: { value: new THREE.Color('#fff4dc') },
+  uSunCol: { value: new THREE.Color('#ffe8c8') },
   uSkyCol: { value: new THREE.Color('#c4f1ff') },
   uFogCol: { value: new THREE.Color('#cdf4ef') },
-  uFogNear: { value: 45 }, uFogFar: { value: 150 },
+  uFogNear: { value: 70 }, uFogFar: { value: 230 },
   uThermal: { value: 0 },
   uHeat: { value: [new THREE.Vector4(0, -99, 0, 0), new THREE.Vector4(0, -99, 0, 0), new THREE.Vector4(0, -99, 0, 0), new THREE.Vector4(0, -99, 0, 0)] },
   uLens: { value: new THREE.Vector3(-9999, -9999, 1) },
@@ -1219,11 +1219,17 @@ vec3 applyThermal(vec3 col, vec3 wp){
   return mix(col, tc, uThermal);
 }
 `;
+const CH_TONE = `
+vec3 softClip(vec3 c){
+  vec3 over = max(c - 0.72, 0.0);
+  return min(c, 0.72) + over / (1.0 + over * 2.6);
+}
+`;
 const CH_FOG = `
 uniform vec3 uFogCol; uniform float uFogNear; uniform float uFogFar;
 vec3 applyFog(vec3 col, vec3 wp){
   float d = distance(cameraPosition, wp);
-  return mix(col, uFogCol, smoothstep(uFogNear, uFogFar, d) * 0.85);
+  return mix(col, uFogCol, smoothstep(uFogNear, uFogFar, d) * 0.55);
 }
 `;
 
@@ -1261,6 +1267,7 @@ uniform vec3 uSunDir; uniform vec3 uSunCol; uniform vec3 uSkyCol; uniform float 
 varying vec3 vN; varying vec3 vW; varying float vH; varying vec3 vCol;
 ${CH_THERMAL}
 ${CH_FOG}
+${CH_TONE}
 void main(){
   vec3 n = normalize(vN);
   if (!gl_FrontFacing) n = -n;
@@ -1270,21 +1277,24 @@ void main(){
   float ndl = dot(n, uSunDir);
   float wrap = clamp((ndl + 0.55) / 1.55, 0.0, 1.0);
   wrap = mix(wrap, floor(wrap * 3.0 + 0.5) / 3.0, 0.35);           /* un toque de caricatura */
-  vec3 col = base * (0.42 + 0.58 * wrap) * mix(vec3(1.0), uSunCol, 0.4);
-  col += base * uSkyCol * 0.12 * (n.y * 0.5 + 0.5);
+  vec3 col = base * (0.6 + 0.38 * wrap) * mix(vec3(1.0), uSunCol, 0.2);
+  col += base * uSkyCol * 0.08 * (n.y * 0.5 + 0.5);
   float fr = pow(1.0 - clamp(dot(n, v), 0.0, 1.0), uRimPow);
-  col += uRim * fr * 0.7;                                              /* borde brillante (Fresnel) */
+  col = mix(col, col * 0.78 + uRim * 0.16, fr * 0.6);                  /* borde de gelatina (Fresnel) */
+  col += mix(base, uRim, 0.35) * fr * 0.16;
   vec3 hl = normalize(uSunDir + n * 0.45);
-  float sss = pow(clamp(dot(v, -hl), 0.0, 1.0), 3.0) * 0.75 + (1.0 - wrap) * 0.18;
-  col += uSss * sss * 0.6;                                                   /* luz que atraviesa */
+  float sss = pow(clamp(dot(v, -hl), 0.0, 1.0), 3.0) * 0.5 + (1.0 - wrap) * 0.1;
+  col += uSss * base * sss * 0.35;                                     /* luz que atraviesa */
   vec3 hv = normalize(uSunDir + v);
-  float sp = pow(max(dot(n, hv), 0.0), 70.0);
-  col += vec3(1.0, 0.98, 0.92) * smoothstep(0.45, 0.6, sp) * uSpec;   /* brillo de caramelo */
+  float sp = pow(max(dot(n, hv), 0.0), 90.0);
+  col += vec3(1.0, 0.98, 0.92) * smoothstep(0.5, 0.65, sp) * uSpec * 0.45;   /* brillo de caramelo */
   float pulse = 0.5 + 0.5 * sin(uTime * 1.5 + uPhase);
-  col += base * uGlow * (0.22 + 0.18 * pulse);                         /* luz interior */
-  col += vec3(1.0, 0.96, 0.75) * uHi * (0.22 + 0.45 * fr);
+  col += base * uGlow * (0.06 + 0.05 * pulse);                         /* luz interior */
+  col += vec3(1.0, 0.92, 0.6) * uHi * (0.18 + 0.3 * fr);
   col = applyThermal(col, vW);
   col = applyFog(col, vW);
+  col = softClip(col);
+  col = mix(vec3(dot(col, vec3(0.3, 0.55, 0.15))), col, 1.18);         /* colores vivos, no grises */
   gl_FragColor = vec4(col, uAlpha + fr * (1.0 - uAlpha) * 0.6);
 }`;
 
@@ -1378,6 +1388,7 @@ uniform vec3 uSunDir; uniform vec3 uSkyCol;
 varying vec2 vUv; varying vec3 vW; varying float vWave;
 ${CH_THERMAL}
 ${CH_FOG}
+${CH_TONE}
 void main(){
   vec2 q = (vUv - 0.5) * 2.0;
   float nz = texture2D(uNoise, vUv * 3.0 + uTime * 0.01).r;
@@ -1394,27 +1405,28 @@ void main(){
   if (n.y < 0.0) n = -n;
   vec3 v = normalize(cameraPosition - vW);
   float fr = pow(1.0 - clamp(dot(n, v), 0.0, 1.0), 3.0);
-  col = mix(col, uSkyCol * 1.05, fr * 0.55);
+  col = mix(col, uSkyCol * 0.9, fr * 0.3);
   /* cáusticas falsas con dos capas de ruido */
   vec2 cu = vW.xz * 0.22;
   float c1 = texture2D(uNoise, cu + vec2(uTime * 0.03, uTime * 0.02)).r;
   float c2 = texture2D(uNoise, cu * 1.3 - vec2(uTime * 0.025, -uTime * 0.018) + 0.37).r;
   float caus = pow(1.0 - abs(c1 - c2), 9.0);
-  col += vec3(0.85, 1.0, 0.95) * caus * (0.25 + 0.45 * (1.0 - depth));
+  col += vec3(0.85, 1.0, 0.95) * caus * (0.1 + 0.22 * (1.0 - depth));
   /* espuma en la orilla */
   float foamN = texture2D(uNoise, vW.xz * 0.6 + vec2(uTime * 0.05, 0.0)).r;
   float foam = smoothstep(0.78, 0.97, r + foamN * 0.12) * (0.6 + 0.4 * sin(uTime * 2.0 + r * 20.0));
-  col = mix(col, uFoamCol, clamp(foam, 0.0, 1.0) * 0.85);
+  col = mix(col, uFoamCol, clamp(foam, 0.0, 1.0) * 0.55);
   /* sol */
   vec3 hv = normalize(uSunDir + v);
   float sp = pow(max(dot(n, hv), 0.0), 90.0);
-  col += vec3(1.0, 0.97, 0.85) * smoothstep(0.3, 0.7, sp + vWave * 1.5) * 0.65;
+  col += vec3(1.0, 0.97, 0.85) * smoothstep(0.45, 0.8, sp + vWave * 1.5) * 0.3;
   /* calor de la lámpara: brillo tibio y temblor */
   float wd = distance(vW.xz, uWarmPos);
   float wm = uWarm * exp(-wd * wd * 0.12);
   col = mix(col, col * vec3(1.15, 1.08, 0.82) + vec3(0.18, 0.12, 0.0), wm * (0.8 + 0.2 * sin(uTime * 7.0 + wd * 5.0)));
   col = applyThermal(col, vW);
   col = applyFog(col, vW);
+  col = softClip(col);
   float a = uAlpha * smoothstep(1.0, 0.9, r);
   gl_FragColor = vec4(col, a);
 }`;
@@ -1431,7 +1443,7 @@ function waterMat(o = {}) {
     uniforms: {
       uTime: GU.uTime, uNoise: GU.uNoise, uSunDir: GU.uSunDir, uSkyCol: GU.uSkyCol,
       uThermal: GU.uThermal, uHeat: GU.uHeat, uFogCol: GU.uFogCol, uFogNear: GU.uFogNear, uFogFar: GU.uFogFar,
-      uShallow: { value: new THREE.Color(o.shallow || '#7ff0e2') }, uDeep: { value: new THREE.Color(o.deep || '#2f86e8') },
+      uShallow: { value: new THREE.Color(o.shallow || '#3fd8cc') }, uDeep: { value: new THREE.Color(o.deep || '#1f6fd0') },
       uFoamCol: { value: new THREE.Color(o.foam || '#f2fffb') }, uAmp: { value: o.amp !== undefined ? o.amp : 1 },
       uRip: { value: rip }, uWarm: { value: 0 }, uWarmPos: { value: new THREE.Vector2(0, 0) },
       uShape: { value: o.shape || 0 }, uAlpha: { value: o.alpha !== undefined ? o.alpha : 0.92 }, uFill: { value: 1 }
@@ -1457,7 +1469,7 @@ void main(){
   vec3 col = mix(hor, top, smoothstep(-0.02, 0.62, d.y));
   col = mix(col, hor * vec3(1.0, 0.95, 0.92), smoothstep(0.0, -0.3, d.y));
   float s = max(dot(d, uSunDir), 0.0);
-  col += vec3(1.0, 0.93, 0.72) * (pow(s, 7.0) * 0.28 + smoothstep(0.9965, 0.998, s) * 0.7);
+  col += vec3(1.0, 0.9, 0.62) * (pow(s, 7.0) * 0.14 + smoothstep(0.9965, 0.998, s) * 0.5);
   vec2 uv = vec2(atan(d.z, d.x) / 6.2831, d.y * 0.6);
   float n = texture2D(uNoise, uv * vec2(4.0, 2.0) + vec2(uTime * 0.002, 0.0)).r;
   float n2 = texture2D(uNoise, uv * vec2(9.0, 5.0) - vec2(uTime * 0.003, 0.0)).r;
@@ -1465,7 +1477,7 @@ void main(){
   gl_FragColor = vec4(col, 1.0);
 }`;
 const SKY_PAL = {   /* turquesa → durazno → lila (amanecer a medida que se repara el ciclo) */
-  topA: '#5fcfea', horA: '#d4fbf0', topB: '#8bb6ff', horB: '#ffdcc0', topC: '#b39bff', horC: '#ffd0e4'
+  topA: '#3fb6e0', horA: '#9fe6e0', topB: '#6f9cf0', horB: '#ffc6a4', topC: '#9a7ff0', horC: '#f6b6d6'
 };
 function skyMat() {
   const C = x => new THREE.Color(x);
@@ -1556,7 +1568,7 @@ uniform sampler2D tDiffuse; uniform float uTh; varying vec2 vUv;
 void main(){
   vec3 c = texture2D(tDiffuse, vUv).rgb;
   float l = max(c.r, max(c.g, c.b));
-  gl_FragColor = vec4(c * smoothstep(uTh, uTh + 0.3, l), 1.0);
+  gl_FragColor = vec4(c * smoothstep(uTh, uTh + 0.12, l) * 0.8, 1.0);
 }`;
 const BLUR_FS = `
 uniform sampler2D tDiffuse; uniform vec2 uDir; varying vec2 vUv;
@@ -1577,7 +1589,7 @@ void main(){
   float l = dot(c, vec3(0.299, 0.587, 0.114));
   c = mix(vec3(l), c, 1.0 + uSat);                                    /* realce de saturación */
   float v = smoothstep(0.62, 1.25, length((vUv - 0.5) * vec2(1.25, 1.0)) * 1.4);
-  c = mix(c, c * vec3(0.9, 0.86, 1.0), v * 0.6);                       /* viñeta lila muy leve */
+  c = mix(c, c * vec3(0.86, 0.82, 0.96), v * 0.6);                       /* viñeta lila muy leve */
   if (uGrain > 0.0) {
     float paper = texture2D(uNoise, vUv * uRes / 256.0).r;
     c *= 1.0 - (paper - 0.5) * uGrain * 1.5;                           /* papel acuarela */
@@ -1734,7 +1746,7 @@ const Tex = {
   _grad: null, _cache: new Map(),
   grad() {   /* gradientMap de 4 tonos para MeshToonMaterial */
     if (this._grad) return this._grad;
-    const d = new Uint8Array([120, 120, 140, 255, 175, 175, 190, 255, 225, 225, 232, 255, 255, 255, 255, 255]);
+    const d = new Uint8Array([105, 100, 135, 255, 160, 155, 185, 255, 205, 200, 220, 255, 240, 236, 245, 255]);
     const t = new THREE.DataTexture(d, 4, 1, THREE.RGBAFormat);
     t.minFilter = t.magFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
     return (this._grad = t);
@@ -1831,9 +1843,9 @@ const Post = {
     g.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 2, 0, 0, 2]), 2));
     this.cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
     this.scene = new THREE.Scene();
-    this.bright = new THREE.ShaderMaterial({ uniforms: { tDiffuse: { value: null }, uTh: { value: 0.72 } }, vertexShader: FS_VS, fragmentShader: BRIGHT_FS, depthTest: false, depthWrite: false });
+    this.bright = new THREE.ShaderMaterial({ uniforms: { tDiffuse: { value: null }, uTh: { value: 0.86 } }, vertexShader: FS_VS, fragmentShader: BRIGHT_FS, depthTest: false, depthWrite: false });
     this.blur = new THREE.ShaderMaterial({ uniforms: { tDiffuse: { value: null }, uDir: { value: new THREE.Vector2() } }, vertexShader: FS_VS, fragmentShader: BLUR_FS, depthTest: false, depthWrite: false });
-    this.comp = new THREE.ShaderMaterial({ uniforms: { tScene: { value: null }, tBloom: { value: null }, uNoise: GU.uNoise, uBloom: { value: 0.75 }, uGrain: { value: 0 }, uSat: { value: 0.12 }, uTime: GU.uTime, uRes: { value: new THREE.Vector2(1, 1) } }, vertexShader: FS_VS, fragmentShader: COMP_FS, depthTest: false, depthWrite: false });
+    this.comp = new THREE.ShaderMaterial({ uniforms: { tScene: { value: null }, tBloom: { value: null }, uNoise: GU.uNoise, uBloom: { value: 0.3 }, uGrain: { value: 0 }, uSat: { value: 0.16 }, uTime: GU.uTime, uRes: { value: new THREE.Vector2(1, 1) } }, vertexShader: FS_VS, fragmentShader: COMP_FS, depthTest: false, depthWrite: false });
     this.quad = new THREE.Mesh(g, this.comp); this.quad.frustumCulled = false; this.scene.add(this.quad);
   },
   setup(level, w, h, pr) {
@@ -1862,7 +1874,7 @@ const Post = {
     this.blur.uniforms.tDiffuse.value = this.b.texture; this.blur.uniforms.uDir.value.set(0, this.texel.y * 1.6);
     r.setRenderTarget(this.a); r.render(this.scene, this.cam);
     this.quad.material = this.comp; this.comp.uniforms.tScene.value = this.rt.texture; this.comp.uniforms.tBloom.value = this.a.texture;
-    this.comp.uniforms.uBloom.value = Settings.calmado ? 0.45 : 0.75;
+    this.comp.uniforms.uBloom.value = Settings.calmado ? 0.18 : 0.3;
     r.setRenderTarget(null); r.render(this.scene, this.cam);
   }
 };
@@ -1906,8 +1918,8 @@ const Engine = {
     this.scene = new THREE.Scene();
     this.scene.fog = new THREE.Fog(GU.uFogCol.value.clone(), GU.uFogNear.value, GU.uFogFar.value);
     this.camera = new THREE.PerspectiveCamera(55, 1, 0.1, 520);
-    this.hemi = new THREE.HemisphereLight('#e4f8ff', '#ffd9c8', 0.5); this.scene.add(this.hemi);
-    this.sun = new THREE.DirectionalLight('#fff2dc', 0.62);
+    this.hemi = new THREE.HemisphereLight('#d4ecff', '#e8c0b0', 0.42); this.scene.add(this.hemi);
+    this.sun = new THREE.DirectionalLight('#fff0d8', 0.55);
     this.sun.position.copy(GU.uSunDir.value).multiplyScalar(60);
     this.sun.shadow.mapSize.set(1024, 1024);
     const sc = this.sun.shadow.camera; sc.left = -22; sc.right = 22; sc.top = 22; sc.bottom = -22; sc.near = 1; sc.far = 160;
@@ -3351,7 +3363,7 @@ const World = {
     out.set('#6fd894').lerp(TMP.c1.set('#a8e070'), n);                         /* pasto menta */
     if (ld < 1.25) out.lerp(TMP.c1.set('#ffcf94'), 1 - U.smooth(1.0, 1.25, ld));  /* arena de la orilla */
     if (h > 3) out.lerp(TMP.c1.set('#a58ee6'), U.smooth(3, 7, h));               /* roca lila */
-    if (h > 13) out.lerp(TMP.c1.set('#f6f8ff'), U.smooth(13, 17, h));            /* nieve */
+    if (h > 13) out.lerp(TMP.c1.set('#e4ecff'), U.smooth(13, 17, h));            /* nieve */
     const dd = Math.hypot(x - this.P.desierto.x, z - this.P.desierto.z);
     if (dd < 18) out.lerp(TMP.c1.set('#ffb878'), U.smooth(18, 10, dd));          /* desierto */
     const rd = this.riverDist(x, z);
@@ -3473,7 +3485,7 @@ const World = {
     /* Nubes de esferas de gelatina en InstancedMesh con flotación suave */
     const n = Engine.q === 0 ? 60 : 110;
     const geo = new THREE.SphereGeometry(1, Engine.Q.seg, Math.round(Engine.Q.seg * 0.7));
-    const mat = jellyMat({ a: '#fbf8ff', b: '#ffffff', rim: '#ffffff', sss: '#fff0f8', glow: 1.1, spec: 0.25, hMin: -1, hMax: 1, float: 0.35 });
+    const mat = jellyMat({ a: '#c6b2ff', b: '#fff0fa', rim: '#ffffff', sss: '#ffd8ec', glow: 0.5, spec: 0.2, hMin: -1, hMax: 1, float: 0.35 });
     const im = this.clouds = new THREE.InstancedMesh(geo, mat, n);
     const m = new THREE.Matrix4(); let k = 0;
     const cluster = (cx, cy, cz, count, spread) => {
@@ -3493,7 +3505,7 @@ const World = {
   setProgress(p) {
     GU.uProgress.value = p;
     skyHorizon(p, GU.uFogCol.value);
-    GU.uSkyCol.value.copy(GU.uFogCol.value).lerp(TMP.c1.set('#bfe8ff'), 0.4);
+    GU.uSkyCol.value.copy(GU.uFogCol.value).lerp(TMP.c1.set('#7fc8f0'), 0.5);
     Engine.scene.fog.color.copy(GU.uFogCol.value);
     Engine.renderer.setClearColor(GU.uFogCol.value);
   },
@@ -4116,7 +4128,7 @@ const Zona1 = {
     const cap = new THREE.Mesh(new THREE.SphereGeometry(0.42, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), toonMat('#ffb37a', { unique: true })); cap.position.y = 0.2; L.add(cap);
     const bulb = this.bulb = new THREE.Mesh(new THREE.SphereGeometry(0.34, 18, 12), jellyMat({ a: '#fff6b0', b: '#ffcf3a', glow: 1.0, rim: '#ffffff', sss: '#fff0a0' })); bulb.position.y = -0.08; L.add(bulb);
     for (let i = 0; i < 8; i++) { const r = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.22, 6), toonMat('#ffd447')); const a = i / 8 * Math.PI * 2; r.position.set(Math.cos(a) * 0.62, 0.05, Math.sin(a) * 0.62); r.rotation.z = -Math.cos(a) * Math.PI / 2; r.rotation.x = Math.sin(a) * Math.PI / 2; L.add(r); }
-    const cone = this.cone = new THREE.Mesh(new THREE.ConeGeometry(1.25, 2.6, 24, 1, true), new THREE.MeshBasicMaterial({ color: '#fff0a0', transparent: true, opacity: 0.15, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
+    const cone = this.cone = new THREE.Mesh(new THREE.ConeGeometry(1.25, 2.6, 24, 1, true), new THREE.MeshBasicMaterial({ color: '#ffb820', transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide }));
     cone.position.y = -1.35; cone.renderOrder = 7; L.add(cone);
     const lampLab = labelSprite('Lámpara solar', { icon: 'sol', h: 0.32 }); lampLab.position.y = 0.75; L.add(lampLab);
     const ped = new THREE.Group(); ped.position.set(-1.23, gy(-1.23, 6.81), 6.81); G.add(ped);
@@ -4289,7 +4301,7 @@ const Zona1 = {
     this.drawTemp();
     this.tStar.rotation.y += dt * 2; this.tStar.scale.setScalar(this.T >= 32 ? 1.3 + Math.sin(t * 4) * 0.15 : 1);
     /* luz y calor en el agua */
-    this.cone.material.opacity = (0.06 + v * 0.22) * (Settings.calmado ? 0.7 : 1);
+    this.cone.material.opacity = (0.06 + v * 0.16) * (Settings.calmado ? 0.7 : 1);
     this.waterMat.uniforms.uWarm.value = ow ? v * 0.9 : 0; this.waterMat.uniforms.uWarmPos.value.set(this.lamp.position.x, this.lamp.position.z);
     GU.uHeat.value[0].set(this.lamp.position.x, -0.2, this.lamp.position.z, ow ? 0.3 + v * 0.7 : 0.25 * v);
     GU.uHeat.value[3].set(this.lamp.position.x, this.lamp.position.y, this.lamp.position.z, 0.6 + v * 0.4);
@@ -4637,7 +4649,7 @@ const ZK = {
       parts.push({ geo: sp.clone(), matrix: mtx(Math.cos(a) * r, ((i * 29) % 10) / 10 * (o.lift || 0.5), Math.sin(a) * r * (o.depth || 0.7), s * (o.flat || 1.2), s * (o.squash || 0.9), s), color: o.colors ? o.colors[i % o.colors.length] : '#ffffff' });
     }
     sp.dispose();
-    return new THREE.Mesh(mergeGeos(parts), jellyMat({ a: o.a || '#ffffff', b: o.b || '#f4eeff', vcol: true, rim: '#ffffff', sss: o.sss || '#fff0f8', glow: o.glow !== undefined ? o.glow : 0.9, spec: 0.25, alpha: o.alpha, wobble: o.wobble || 0.02, hMin: -1, hMax: 1.2 }));
+    return new THREE.Mesh(mergeGeos(parts), jellyMat({ a: o.a || '#e2d6ff', b: o.b || '#fff8fd', vcol: true, rim: '#ffffff', sss: o.sss || '#ffd8ec', glow: o.glow !== undefined ? Math.min(o.glow, 0.5) : 0.35, spec: 0.25, alpha: o.alpha, wobble: o.wobble || 0.02, hMin: -1, hMax: 1.2 }));
   },
   /* Cubo de letra para los acertijos */
   letterTile(ch, color) {
@@ -4748,9 +4760,9 @@ const Zona2 = {
     CamRig.addMarker('z2_acertijo', P(-4.4, T - 0.2, 3.9), 'Acertijo');
     CamRig.addMarker('z2_cielo', P(0, T - 0.2, 3.4), 'Cielo');
     /* Isla de nubes */
-    const isl = ZK.cloud(26, 7.5, { size: 1.6, flat: 1.5, squash: 0.5, lift: 0.3, glow: 0.25, colors: ['#e2d6ff', '#efe6ff', '#ffe2f2', '#dcecff'] });
+    const isl = ZK.cloud(26, 7.5, { size: 1.6, flat: 1.5, squash: 0.5, lift: 0.3, glow: 0.25, colors: ['#c4acff', '#d8c8ff', '#ffc4e4', '#b4d4ff'] });
     isl.position.copy(P(0, T - 0.75, 0.6)); G.add(isl);
-    for (const sx of [-1, 1]) { const s = ZK.cloud(12, 2.6, { size: 1.2, flat: 1.4, squash: 0.5, glow: 0.25, colors: ['#e6dcff', '#f2eaff'] }); s.position.copy(P(6 * sx, T - 0.65, 5.0)); G.add(s); }
+    for (const sx of [-1, 1]) { const s = ZK.cloud(12, 2.6, { size: 1.2, flat: 1.4, squash: 0.5, glow: 0.25, colors: ['#c8b4ff', '#ffc8e8'] }); s.position.copy(P(6 * sx, T - 0.65, 5.0)); G.add(s); }
     /* ---- Paso 1: espejo helado y piedra tibia ---- */
     const mir = this.mirror = new THREE.Group(); mir.position.copy(P(-4.6, T, -1.2)); G.add(mir);
     const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 1.6, 8), toonMat('#9cc4ff')); pole.position.y = 0.8; mir.add(pole);
@@ -5125,13 +5137,13 @@ const Zona3 = {
     CamRig.addMarker('z3_clima', P(0, T, 4.6), 'Nube');
     /* Meseta de hielo de gelatina */
     const h = M.y + 3;
-    const pil = new THREE.Mesh(new THREE.CylinderGeometry(8, 9.6, h, 30, 1), jellyMat({ a: '#a8d0ff', b: '#eef8ff', glow: 0.35, rim: '#ffffff', sss: '#d8f0ff', hMin: -h / 2, hMax: h / 2 }));
+    const pil = new THREE.Mesh(new THREE.CylinderGeometry(8, 9.6, h, 30, 1), jellyMat({ a: '#5f9cf4', b: '#b8d8ff', glow: 0.2, rim: '#ffffff', sss: '#a8d0ff', hMin: -h / 2, hMax: h / 2 }));
     pil.position.set(M.x, M.y - h / 2, M.z); G.add(pil);
-    const top = new THREE.Mesh(new THREE.CylinderGeometry(8.1, 8.1, 0.32, 30), jellyMat({ a: '#dfeaff', b: '#f2f7ff', glow: 0.12, rim: '#b8d4ff', hMin: -0.2, hMax: 0.2 })); top.position.set(M.x, M.y, M.z); G.add(top);
+    const top = new THREE.Mesh(new THREE.CylinderGeometry(8.1, 8.1, 0.32, 30), jellyMat({ a: '#8cc0ff', b: '#bcdcff', glow: 0.1, rim: '#ffffff', hMin: -0.2, hMax: 0.2 })); top.position.set(M.x, M.y, M.z); G.add(top);
     const bumps = []; const sp = new THREE.SphereGeometry(1, 10, 8);
     for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2; bumps.push({ geo: sp.clone(), matrix: mtx(Math.cos(a) * 7.6, 0.1, Math.sin(a) * 7.6, 0.9, 0.45, 0.9), color: i % 2 ? '#ffffff' : '#e8f4ff' }); }
     sp.dispose();
-    const bm = new THREE.Mesh(mergeGeos(bumps), jellyMat({ a: '#e8f0ff', vcol: true, glow: 0.15 })); bm.position.copy(P(0, T, 0)); G.add(bm);
+    const bm = new THREE.Mesh(mergeGeos(bumps), jellyMat({ a: '#a8ccff', vcol: true, glow: 0.1 })); bm.position.copy(P(0, T, 0)); G.add(bm);
     /* Nube de la máquina del clima */
     const cl = this.cloud = ZK.cloud(14, 2.3, { size: 1.05, colors: ['#ece6ff', '#dcd4f6', '#f4f0ff'], glow: 0.6 }); cl.position.copy(P(0, T + 6.2, -3)); G.add(cl);
     this.cloudPos = cl.position.clone();
@@ -5150,7 +5162,7 @@ const Zona3 = {
     this.sign = Tex.canvas(512, 160); z.disp.add(this.sign.tex);
     const sg = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.69), new THREE.MeshBasicMaterial({ map: this.sign.tex, transparent: true })); sg.position.set(0, 2.25, -0.2); con.add(sg); this.signMesh = sg;
     /* Efectos en el suelo: manto de nieve y charquito */
-    const snow = this.snowLayer = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.8, 0.3, 24), jellyMat({ a: '#ffffff', b: '#eef6ff', glow: 0.5, hMin: -0.15, hMax: 0.15 }));
+    const snow = this.snowLayer = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.8, 0.3, 24), jellyMat({ a: '#d4e4ff', b: '#f2f7ff', glow: 0.2, hMin: -0.15, hMax: 0.15 }));
     snow.position.copy(P(0, T, -3)); snow.scale.y = 0.01; G.add(snow);
     const pw = this.puddleMat = waterMat({ shallow: '#a8f4ff', deep: '#4b8dff', alpha: 0.8, amp: 0.5 });
     const pud = this.puddle = new THREE.Mesh(waterGeo(Engine.Q.aguaSeg), pw); pud.scale.set(2.4, 1, 2.0); pud.position.copy(P(0, T + 0.18, -3)); pw.uniforms.uFill.value = 0.01; G.add(pud);
@@ -5161,7 +5173,7 @@ const Zona3 = {
     /* ---- Deshielo: montones de nieve y rayo de sol ---- */
     this.piles = [];
     [[4.0, -1.4], [5.6, -2.9], [6.8, -0.8]].forEach(([x, zz], i) => {
-      const m = new THREE.Mesh(new THREE.SphereGeometry(0.9, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), jellyMat({ a: '#ffffff', b: '#e8f4ff', glow: 0.5, rim: '#cfe8ff', hMin: 0, hMax: 0.9 }));
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.9, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), jellyMat({ a: '#a8ccff', b: '#e4efff', glow: 0.2, rim: '#ffffff', hMin: 0, hMax: 0.9 }));
       m.position.copy(P(x, T, zz)); m.scale.set(1, 1.1, 1); G.add(m); addOutline(m, 0.03, '#6aa8e0');
       this.piles.push({ m, melt: 0, done: false });
     });
@@ -5171,7 +5183,7 @@ const Zona3 = {
     const ray = this.ray = new THREE.Group(); ray.position.copy(P(3.4, T + 1.9, 1.8)); G.add(ray);
     const rs = new THREE.Mesh(new THREE.SphereGeometry(0.32, 16, 12), jellyMat({ a: '#fff6b0', b: '#ffb52e', glow: 1.4, rim: '#ffffff' })); ray.add(rs); addOutline(rs, 0.03, '#c9861a');
     for (let i = 0; i < 6; i++) { const c = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.24, 6), toonMat('#ffd447')); const a = i / 6 * Math.PI * 2; c.position.set(Math.cos(a) * 0.46, 0, Math.sin(a) * 0.46); c.rotation.z = -Math.cos(a) * Math.PI / 2; c.rotation.x = Math.sin(a) * Math.PI / 2; ray.add(c); }
-    const beam = this.beam = new THREE.Mesh(new THREE.ConeGeometry(0.75, 1.9, 18, 1, true), new THREE.MeshBasicMaterial({ color: '#fff0a0', transparent: true, opacity: 0.22, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
+    const beam = this.beam = new THREE.Mesh(new THREE.ConeGeometry(0.75, 1.9, 18, 1, true), new THREE.MeshBasicMaterial({ color: '#ffb820', transparent: true, opacity: 0.12, depthWrite: false, side: THREE.DoubleSide }));
     beam.position.y = -1.0; ray.add(beam);
     const rl = labelSprite('Rayo de sol', { icon: 'sol', h: 0.24 }); rl.position.y = 0.65; ray.add(rl);
     /* arroyo (franja de agua que crece) */
@@ -5247,7 +5259,7 @@ const Zona3 = {
     }
     /* rayo de sol: derrite montones de nieve */
     const rp = this.ray.position;
-    this.beam.material.opacity = 0.18 + Math.sin(t * 3) * 0.04;
+    this.beam.material.opacity = 0.16 + Math.sin(t * 3) * 0.03;
     if (this.melting) {
       for (const p of this.piles) {
         if (p.done) continue;
